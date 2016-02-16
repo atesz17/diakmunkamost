@@ -1,0 +1,58 @@
+/* VARIABLES
+---------------------------------------------------------------------*/
+
+$mobile-screen: 400px;
+$phablet-screen: 550px;
+$tablet-screen: 750px;
+$desktop-screen: 1000px;
+$desktop-UHD-screen: 1200px;
+
+/* HEADER
+---------------------------------------------------------------------*/
+
+header  {
+
+  nav {
+
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border-bottom: 1px solid #555;
+
+    a {
+
+      text-decoration: none;
+      padding: 14px 16px;
+      background-color: blue;
+
+      @media (max-width: $phablet-screen) {
+        display: block;
+        text-align: center;
+      }
+    }
+
+    a#brand-logo  {
+
+      color: green;
+    }
+
+    ul  {
+
+      float: right;
+      list-style-type: none;
+      margin: 0;
+
+      li  {
+
+        display: inline;
+        margin: 0;
+
+        @media (max-width: $phablet-screen) {
+          display: block;
+          text-align: center;
+        }
+
+      }
+    }
+  }
+}

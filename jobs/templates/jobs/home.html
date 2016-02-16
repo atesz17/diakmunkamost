@@ -1,0 +1,10 @@
+{% extends 'jobs/base.html' %}
+
+{% block content %}
+{% load staticfiles %}
+<div class="container">
+  <h1>Munkák Neked!</h1>
+  <h5>Válogass {{ jobs.count }} munka közül!</h5>
+  <a class="button button-primary" href="{% url 'jobs:all_jobs' 1 %}">Megnézem</a>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+/* VARIABLES
+---------------------------------------------------------------------*/
+/* HEADER
+---------------------------------------------------------------------*/
+header nav {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border-bottom: 1px solid #555; }
+  header nav a {
+    text-decoration: none;
+    padding: 14px 16px;
+    background-color: blue; }
+    @media (max-width: 550px) {
+      header nav a {
+        display: block;
+        text-align: center; } }
+  header nav a#brand-logo {
+    color: green; }
+  header nav ul {
+    float: right;
+    list-style-type: none;
+    margin: 0; }
+    header nav ul li {
+      display: inline;
+      margin: 0; }
+      @media (max-width: 550px) {
+        header nav ul li {
+          display: block;
+          text-align: center; } }
+
+/*# sourceMappingURL=myStyle.css.map */

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% include "jobs/snippets/meta_tags.html" %}
+  <title>{% block page_title %}Diákmunka most!{% endblock %}</title>
+  {% load staticfiles %}
+  <link rel="stylesheet" type="text/css" href="{% static 'jobs/css/vendor/normalize.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'jobs/css/vendor/skeleton.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'jobs/css/myStyle.css' %}" />
+</head>
+<body>
+  {% include "jobs/snippets/header.html" %}
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+  {% include "jobs/snippets/footer.html" %}
+  {% include "jobs/snippets/bottom_script_include.html" %}
+</body>
+</html>

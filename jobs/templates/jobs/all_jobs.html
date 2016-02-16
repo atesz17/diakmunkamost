@@ -1,0 +1,29 @@
+{% extends 'jobs/base.html' %}
+
+{% block page_title %}Összes Munka | Diákmunka most!{% endblock %}
+
+{% block content %}
+<form method="GET" action="{% url 'jobs:all_jobs' 1 %}">
+  {{ search_form }}
+  <input type="submit" value="Mehet">
+</form>
+  {% if jobs %}
+    {% for job in jobs %}
+      <p>
+        <a href="{% url 'jobs:specific_job' job.id %}">{{ job.title|upper }}</a>
+      </p>
+    {% endfor %}
+  {% else %}
+    <p>Nincs a megadott paramétereknek megfelelő munka.</p>
+  {% endif %}
+<div class="pagination">
+  <span class="step-links">
+    {% if jobs.has_previous %}
+      <a href="{% url 'jobs:all_jobs' jobs.previous_page_number %}{{ query_string }}">Előző</a>
+    {% endif %}
+    {% if jobs.has_next %}
+      <a href="{% url 'jobs:all_jobs' jobs.next_page_number %}{{ query_string }}">Következő</a>
+    {% endif %}
+  </span>
+</div>
+{% endblock %}

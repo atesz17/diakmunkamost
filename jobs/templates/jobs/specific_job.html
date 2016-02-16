@@ -1,0 +1,26 @@
+{% extends 'jobs/base.html' %}
+
+{% block page_title %}{{ job.title }} | Diákmunka most!{% endblock %}
+
+{% block content %}
+  <h1 id="job-title">{{ job.title }}</h1>
+  <h3 id="job-type">Munka típusa: {{ job.get_job_type_display }}</h3>
+  <h3>Feladat leírása:</h3>
+  <p id="job-task">{{ job.task }}</p>
+  <h3 id="job-place-of-work">Munkavégzés helye: {{ job.place_of_work }}</h3>
+  {% if job.max_salary == 0 and job.min_salary == 0 %}
+    <h3 id="job-salary">Bérezés: Megállapodás szerint</h3>
+  {% elif job.max_salary == job.min_salary %}
+    <h3 id="job-salary">Bérezés: {{ job.min_salary }} Ft/óra</h3>
+  {% else %}
+    <h3 id="job-salary">Bérezés: {{ job.min_salary}} - {{ job.max_salary}} Ft/óra</h3>
+  {% endif %}
+  <h3 id="job-working-hours">Munkaidő: {{ job.working_hours }}</h3>
+  <h3>Feltételek:</h3>
+  <p id="job-requirements">{{ job.requirements }}</p>
+  {% if job.other_info %}
+    <h3>Egyéb információ:</h3>
+    <p id="job-other-info">{{ job.other_info }}</p>
+  {% endif %}
+  <a type="button" id="job-url" class="btn btn-primary btn-lg" href="{{ job.url }}">Jelentkezem!</a>
+{% endblock %}
