@@ -40,24 +40,28 @@ class Job(TimeStampedModel):
         choices=JOB_TYPES,
         db_index=True,
         verbose_name='Munka típusa')
-    #  ezt majd max kesobb, most nem prioritas, hogy lehessen keresni
-    #  hely alapjan. A problema, hogy listaban kene lennie, hiszen van
-    #  olyan melo, amit tobb helyen lehet vegezni...
-    #  Egyelore legyen az a terv, hogy
-    #
-    #  CSAK PESTI!!!!!!
-    #
-    #  melokat fogunk kilistazni
+    '''
+    ezt majd max kesobb, most nem prioritas, hogy lehessen keresni
+    hely alapjan. A problema, hogy listaban kene lennie, hiszen van
+    olyan melo, amit tobb helyen lehet vegezni...
+    Egyelore legyen az a terv, hogy
+    CSAK PESTI!!!!!!
+    melokat fogunk kilistazni
+    '''
     task = models.TextField(verbose_name='Feladat leírása')
     place_of_work = models.TextField(verbose_name='Munkavégzés helye')
     min_salary = models.IntegerField(
         db_index=True, verbose_name='Minumum órabér')
     max_salary = models.IntegerField(verbose_name='Maximum órabér')
-    #  itt is hasonlo a helyzet, mint a job_type-nal
+    '''
+    itt is hasonlo a helyzet, mint a job_type-nal
+    vagyis van olyan, hogy tobb erteket adnak meg, valahol pontos
+    intervallumot irnak le, mashol orat, szval nehezkes, Egyelore
+    nem prioritas
+    '''
     working_hours = models.TextField(verbose_name='Munkaidő')
     requirements = models.TextField(verbose_name='Feltételek')
     url = models.TextField(verbose_name='Munka URL címe')
-    #  Orakra van szurve a hozzaadas datuma, percre folosleges lenne
     other_info = models.TextField(blank=True, verbose_name='Egyéb információ')
 
     def get_absolute_url(self):
