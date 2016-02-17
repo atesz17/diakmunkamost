@@ -5,21 +5,27 @@ from .models import Job
 
 class AllJobSearchForm(forms.Form):
 
+    NOVEKVO = 0
+    CSOKKENO = 1
+
     ORDER_BY_LIST = [
-        (0, 'Fizetés szerint növekvő'),
-        (1, 'Fizetés szerint csökkenő')
+        (NOVEKVO, 'Fizetés szerint növekvő'),
+        (CSOKKENO, 'Fizetés szerint csökkenő')
     ]
 
     job_types = forms.MultipleChoiceField(
         choices=Job.JOB_TYPES,
         widget=forms.widgets.CheckboxSelectMultiple,
         required=False,
-        label='Munka típusa')
+        label='Munka típusa'
+    )
     min_salary = forms.IntegerField(
         required=False,
-        label='Minumum órabér (Ft/óra)')
+        label='Minumum órabér (Ft/óra)'
+    )
     order_by = forms.ChoiceField(
         choices=ORDER_BY_LIST,
+        initial=CSOKKENO,
         widget=forms.widgets.RadioSelect,
         label="Rendezés fizetés szerint",
     )

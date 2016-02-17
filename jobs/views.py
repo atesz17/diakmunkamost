@@ -22,6 +22,7 @@ def about(request):
 
 def all_jobs(request, page=1):
     job_list = get_jobs_matching_get_params(request)
+    #  empty_permitted=True
     search_form = AllJobSearchForm(initial=request.GET)
     paginator = Paginator(job_list, PAGINATION_AMOUNT)
     try:
@@ -29,7 +30,8 @@ def all_jobs(request, page=1):
     except EmptyPage:
         # ha nincs ilyen oldal, akkor az utolso ervenyes oldalra redirect
         response = redirect(
-            reverse('jobs:all_jobs', args=(paginator.num_pages,)))
+            reverse('jobs:all_jobs', args=(paginator.num_pages,))
+        )
         response['Location'] += raw_query_string_parameters(request)
         return response
     return render(

@@ -7,16 +7,27 @@ from django.db import models
 class TimeStampedModel(models.Model):
     created = models.DateTimeField(
         auto_now_add=True,
-        verbose_name='Hozzáadás dátuma')
+        verbose_name='Hozzáadás dátuma'
+    )
     modified = models.DateTimeField(
         auto_now=True,
-        verbose_name='Módosítás dátuma')
+        verbose_name='Módosítás dátuma'
+    )
 
     class Meta:
         abstract = True
 
 
 class Job(TimeStampedModel):
+
+    '''
+    Parsing (es architekturalis) problemak miatt egyelore csak:
+        1. Pesti munkakat jelenitek meg a honlapon (nem lehet mezore keresni)
+        2. Munkaido is csak text (nem lehet mezore keresni)
+
+    Kesobbi prioritas lesz majd ezen mezok rendes megvalositasa
+    '''
+
     KONNYU_FIZIKAI = 0
     IRODAI = 1
     TELEFONOS = 2
@@ -40,61 +51,43 @@ class Job(TimeStampedModel):
     job_type = models.IntegerField(
         choices=JOB_TYPES,
         db_index=True,
-        verbose_name='Munka típusa')
-    '''
-    ezt majd max kesobb, most nem prioritas, hogy lehessen keresni
-    hely alapjan. A problema, hogy listaban kene lennie, hiszen van
-    olyan melo, amit tobb helyen lehet vegezni...
-    Egyelore legyen az a terv, hogy
-    CSAK PESTI!!!!!!
-    melokat fogunk kilistazni
-    '''
+        verbose_name='Munka típusa'
+    )
     task = models.TextField(verbose_name='Feladat leírása')
     place_of_work = models.TextField(verbose_name='Munkavégzés helye')
     min_salary = models.IntegerField(
-        db_index=True, verbose_name='Minumum órabér')
+        db_index=True, verbose_name='Minumum órabér'
+    )
     max_salary = models.IntegerField(verbose_name='Maximum órabér')
-    '''
-    itt is hasonlo a helyzet, mint a job_type-nal
-    vagyis van olyan, hogy tobb erteket adnak meg, valahol pontos
-    intervallumot irnak le, mashol orat, szval nehezkes, Egyelore
-    nem prioritas
-    '''
     working_hours = models.TextField(verbose_name='Munkaidő')
     requirements = models.TextField(verbose_name='Feltételek')
     url = models.TextField(
         validators=[URLValidator(schemes=['http', 'https'])],
-        verbose_name='Munka URL címe')
+        verbose_name='Munka URL címe'
+    )
     other_info = models.TextField(blank=True, verbose_name='Egyéb információ')
 
     def get_absolute_url(self):
         return reverse('jobs:specific_job', args=(self.id,))
 
-    def check_max_salary_is_greater_or_equal_than_min_salary(self):
+    '''
+    Sajnos django nem allitja le a full_clean-t, ha a kulonbozo fieldeknel
+    ValidationError volt, hanem megy tovabb, es egy dictbe beleteszi az
+    errokat. Ezert 2x kell ellenorizni, hogy nem ures a min/max salary field
+    (egyszer automatikusan a clean_field-nel, egyszer pedig a clean-ben)
+
+    https://docs.djangoproject.com/en/1.9/_modules/django/db/models/base/#Model.full_clean
+    '''
+
+    def validate_min_max_salary(self):
+        if self.min_salary is None or self.max_salary is None:
+            raise ValidationError('Minimum órabér vagy maximum órabér üres')
         if self.min_salary > self.max_salary:
             msg = "min_salary({0}) cannot be greater than max_salary({1})"
             raise ValidationError(
-                msg.format(self.min_salary, self.max_salary))
+                msg.format(self.min_salary, self.max_salary)
+            )
 
-    '''
-    Azert hulyeseg ez a fgv, mert django alapbol nem engedne ures fielddel
-    elmenteni oket, viszont django-admin-nal kiakad, ha nem ellenorzom elotte
-    hogy nem uresek a fieldek. TODO: valami jobb megoldas
-    '''
-    def check_for_None_types_in_min_and_max_salary(self):
-        if self.min_salary is None or self.max_salary is None:
-            raise ValidationError('Minimum órabér vagy maximum órabér üres')
-
-    def validate_min_max_salary(self):
-        # Ehelyett kene valami jobbat kitalalni
-        self.check_for_None_types_in_min_and_max_salary()
-        self.check_max_salary_is_greater_or_equal_than_min_salary()
-
-    '''
-    Ez egy eleg bena workaround, a cel az lenne, hogy min<=max MINDIG. Eddig
-    csak <= check volt, testeken at is ment, viszont admin felulet kiakadt,
-    mert None volt mindketto, ha nem irtam bele semmit.
-    '''
     def clean(self):
         self.validate_min_max_salary()
 
