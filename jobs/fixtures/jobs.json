@@ -1,0 +1,20 @@
+[
+{
+    "model": "jobs.job",
+    "pk": 1,
+    "fields": {
+        "created": "2016-02-17T12:28:23.127Z",
+        "modified": "2016-02-17T12:28:23.127Z",
+        "title": "Legjobb munka Budapest",
+        "job_type": 0,
+        "task": "Egesz nap azt csinalod amit szeretnel",
+        "place_of_work": "Budapest",
+        "min_salary": 1500,
+        "max_salary": 15000,
+        "working_hours": "Amennyit te akarsz",
+        "requirements": "Nincs",
+        "url": "https://www.onecandream.org",
+        "other_info": ""
+    }
+}
+]
