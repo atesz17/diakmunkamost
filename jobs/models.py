@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
+from django.core.validators import URLValidator
 from django.db import models
 
 
@@ -61,7 +62,9 @@ class Job(TimeStampedModel):
     '''
     working_hours = models.TextField(verbose_name='Munkaidő')
     requirements = models.TextField(verbose_name='Feltételek')
-    url = models.TextField(verbose_name='Munka URL címe')
+    url = models.TextField(
+        validators=[URLValidator(schemes=['http', 'https'])],
+        verbose_name='Munka URL címe')
     other_info = models.TextField(blank=True, verbose_name='Egyéb információ')
 
     def get_absolute_url(self):
@@ -69,11 +72,9 @@ class Job(TimeStampedModel):
 
     def check_max_salary_is_greater_or_equal_than_min_salary(self):
         if self.min_salary > self.max_salary:
+            msg = "min_salary({0}) cannot be greater than max_salary({1})"
             raise ValidationError(
-                "min_salary({0}) cannot be greater than max_salary({1})".format(
-                    self.min_salary, self.max_salary
-                )
-            )
+                msg.format(self.min_salary, self.max_salary))
 
     '''
     Azert hulyeseg ez a fgv, mert django alapbol nem engedne ures fielddel
