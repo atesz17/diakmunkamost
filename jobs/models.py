@@ -63,6 +63,7 @@ class Job(TimeStampedModel):
     requirements = models.TextField(verbose_name='Feltételek')
     url = models.TextField(
         validators=[URLValidator(schemes=['http', 'https'])],
+        unique=True,
         verbose_name='Munka URL címe'
     )
     other_info = models.TextField(blank=True, verbose_name='Egyéb információ')
@@ -70,18 +71,15 @@ class Job(TimeStampedModel):
     def get_absolute_url(self):
         return reverse('jobs:specific_job', args=(self.id,))
 
-    '''
-    Sajnos django nem allitja le a full_clean-t, ha a kulonbozo fieldeknel
-    ValidationError volt, hanem megy tovabb, es egy dictbe beleteszi az
-    errokat. Ezert 2x kell ellenorizni, hogy nem ures a min/max salary field
-    (egyszer automatikusan a clean_field-nel, egyszer pedig a clean-ben)
-
-    https://docs.djangoproject.com/en/1.9/_modules/django/db/models/base/#Model.full_clean
-    '''
-
     def validate_min_max_salary(self):
+        '''
+        https://docs.djangoproject.com/en/1.9/_modules/django/db/models/base/#Model.full_clean
+
+        Nem dobunk ValidationError-t, ha valamelyik None, mert azt ugy is meg
+        ellenorizni fogja kulon a field required constraint. Csak returnolunk
+        '''
         if self.min_salary is None or self.max_salary is None:
-            raise ValidationError('Minimum órabér vagy maximum órabér üres')
+            return
         if self.min_salary > self.max_salary:
             msg = "min_salary({0}) cannot be greater than max_salary({1})"
             raise ValidationError(
