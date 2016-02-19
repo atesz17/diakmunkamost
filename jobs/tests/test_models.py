@@ -33,24 +33,6 @@ class JobModelTest(TestCase):
         with self.assertRaises(IntegrityError):
             job.save()
 
-    def test_modified_field_change_when_object_is_accessed(self):
-        job = create_and_save_dummy_job_to_db()
-        job_id = job.id
-        modified_time = job.modified
-        job = Job.objects.get(pk=job_id)
-        job.title = 'b'  # accessing element, modified field shoudl change
-        job.save()
-        self.assertNotEqual(modified_time, Job.objects.get(id=job_id).modified)
-
-    def test_created_field_doesnt_change_when_object_is_accessed(self):
-        job = create_and_save_dummy_job_to_db()
-        job_id = job.id
-        created_time = job.created
-        job = Job.objects.get(pk=job_id)
-        job.title = 'b'
-        job.save()
-        self.assertEqual(created_time, Job.objects.get(id=job_id).created)
-
     def test_job_object_can_be_saved_leaving_other_info_field_empty(self):
         job = create_dummy_job()
         job.other_info = ''

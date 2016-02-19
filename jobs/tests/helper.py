@@ -3,15 +3,15 @@ from jobs.models import Job
 
 def create_dummy_job():
     return Job(
-        title='a',
+        title='Dummy Title',
         job_type=0,
-        task='a',
-        place_of_work='a',
-        min_salary=10,
-        max_salary=10,
-        working_hours='a',
-        requirements='a',
-        url='http://www.lololol123lol.com'
+        task='Dummy Task',
+        place_of_work='Dummy Place of Work',
+        min_salary=1000,
+        max_salary=1000,
+        working_hours='Dummy Working Hours',
+        requirements='Dummy Requirements',
+        url='http://www.dummyurl.com'
     )
 
 
