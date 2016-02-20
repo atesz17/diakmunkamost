@@ -3,11 +3,12 @@ from django.core.urlresolvers import reverse
 from django.db.models.query import QuerySet
 from django.test import TestCase
 
-from .helper import create_and_save_dummy_job_to_db
+from .helper import DummyJobManager
 from jobs.models import Job
 from jobs.views import PAGINATION_AMOUNT
 
 import math
+from unittest import skip
 
 
 class HomePageTest(TestCase):
@@ -29,6 +30,7 @@ class HomePageTest(TestCase):
     def test_home_page_has_correct_title(self):
         self.assertContains(self.response, '<title>Diákmunka most!</title>')
 
+    @skip  # TODO: HTML elementek tesztelese
     def test_home_page_has_logo_pointing_to_home_(self):
         element = '<a class="navbar-brand" href="{0}">Diákmunka most!</a>'
         self.assertContains(self.response, element.format(reverse('home')))
@@ -40,6 +42,7 @@ class HomePageTest(TestCase):
     """
     Specifikus tesztek
     """
+    @skip  # TODO: HTML elementek tesztelese
     def test_home_page_has_prim_btn_pointing_to_all_jobs(self):
         element = '<a type="button" class="btn btn-primary btn-lg" href="{0}">'
         self.assertContains(
@@ -70,6 +73,7 @@ class AboutPageTest(TestCase):
         element = '<title>Az oldalról | Diákmunka most!</title>'
         self.assertContains(self.response, element)
 
+    @skip  # TODO: HTML elementek tesztelese
     def test_about_page_has_logo_pointing_to_home_(self):
         element = '<a class="navbar-brand" href="{0}">Diákmunka most!</a>'
         self.assertContains(self.response, element.format(reverse('home')))
@@ -87,8 +91,7 @@ class AllJobPageTest(TestCase):
     def setUp(self):
         self.non_existent_page = 1234
         self.job_count = 51
-        for i in range(self.job_count):  # azert, hogy 3 oldal legyen
-            create_and_save_dummy_job_to_db()
+        self.dummy_manager = DummyJobManager(self.job_count)
 
     def test_all_job_page_renders_correct_template(self):
         self.response = self.client.get(reverse(
@@ -123,7 +126,8 @@ class AllJobPageTest(TestCase):
 
     def test_no_next_link_on_last_page(self):
         self.response = self.client.get(reverse(
-            'jobs:all_jobs', args=(math.ceil(self.job_count/PAGINATION_AMOUNT),)
+            'jobs:all_jobs',
+            args=(math.ceil(self.job_count/PAGINATION_AMOUNT),)
         ))
         self.assertNotContains(self.response, 'Következő')
         #  Ahhoz, hogy ez a teszt atmenjen, legalabb 2 oldalnyi munka kell
@@ -149,10 +153,8 @@ class AllJobPageTest(TestCase):
                 'Előző'))
         self.assertContains(
             self.response,
-            '<a href="{0}">{1}</a>'.format(
-                reverse(
-                    'jobs:all_jobs',
-                    args=(3,)),
+            '<a href="{0}">{1}</a>'.format(reverse(
+                'jobs:all_jobs', args=(3,)),
                 'Következő'))
 
     def test_non_existent_page_redirects_to_last_page(self):
@@ -161,12 +163,9 @@ class AllJobPageTest(TestCase):
             args=(self.non_existent_page,)))
         self.assertRedirects(
             self.response,
-            reverse('jobs:all_jobs', args=(math.ceil(self.job_count/PAGINATION_AMOUNT),)))
-
-    '''
-    TODO: Minden job, ami az odalon van, normalis url-re mutat (sajat magara)
-    ehhez viszont lehet, hogy Beautifulsoup kell
-    '''
+            reverse(
+                'jobs:all_jobs',
+                args=(math.ceil(self.job_count/PAGINATION_AMOUNT),)))
 
     def test_all_page_context(self):
         self.response = self.client.get(reverse('jobs:all_jobs', args=(1,)))
@@ -176,7 +175,7 @@ class AllJobPageTest(TestCase):
 class SpecificJobPageTest(TestCase):
 
     def setUp(self):
-        self.job = create_and_save_dummy_job_to_db()
+        self.job = DummyJobManager().create_and_save_job()
         self.response = self.client.get(reverse(
             'jobs:specific_job',
             args=(self.job.id,)))
@@ -249,7 +248,9 @@ class SpecificJobPageTest(TestCase):
             args=(self.job.id,)))
         self.assertContains(
             self.response,
-            '<h3 id="job-salary">Bérezés: Megállapodás szerint</h3>')
+            '<h3 id="job-salary">Bérezés: {0}</h3>'.format(
+                Job.UNDEFINED_SALARY_TEXT
+            ))
 
     def test_specific_job_page_displays_working_hours(self):
         self.assertContains(
@@ -266,9 +267,8 @@ class SpecificJobPageTest(TestCase):
             '<p id="job-requirements">{0}</p>'.format(self.job.requirements))
 
     def test_specific_job_page_displays_url_to_actual_job(self):
-        self.assertContains(
-            self.response,
-            '<a type="button" id="job-url" class="btn btn-primary btn-lg" href="{0}">Jelentkezem!</a>'.format(self.job.url))
+        element = '<a type="button" id="job-url" class="btn btn-primary btn-lg" href="{0}">Jelentkezem!</a>'
+        self.assertContains(self.response, element.format(self.job.url))
 
     def test_specific_job_page_doesnt_displays_other_info_if_it_empty(self):
         self.assertNotContains(

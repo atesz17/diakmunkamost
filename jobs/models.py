@@ -37,6 +37,8 @@ class Job(TimeStampedModel):
     ARUHAZI_VENDEGLATOS = 6
     EGYEB = 7
 
+    UNDEFINED_SALARY_TEXT = 'Megállapodás szerint'
+
     JOB_TYPES = [
         (KONNYU_FIZIKAI, 'Könnyű fizikai'),
         (IRODAI, 'Irodai'),
