@@ -18,7 +18,7 @@ class DummyJobManager:
             self.create_and_save_job()
 
     def create_and_save_job(self, **kwargs):
-        job = self.__create_job(**kwargs)
+        job = self.create_job(**kwargs)
         job.full_clean()
         job.save()
         return job
@@ -27,7 +27,7 @@ class DummyJobManager:
         for i in range(times):
             yield self.create_and_save_job()
 
-    def __create_job(self, **kwargs):
+    def create_job(self, **kwargs):
         DummyJobManager.index = DummyJobManager.index + 1
         return Job(
             title=kwargs.get(
