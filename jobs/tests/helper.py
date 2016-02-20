@@ -5,7 +5,10 @@ class DummyJobManager:
     """
     Osztaly, ami a Django fixture feature-t szeretne helyettesiteni.
     Ahelyett, hogy statikusan megadnank fixture-ket, igy viszonylag
-    dinamikusan lehet generalni initial adatot
+    dinamikusan lehet generalni initial adatot. Azert ha csak
+    placeholdernek kellenek munkak, akkor erdemesebb fixture-t
+    hasznalni, mert az darabonkenti save() ha sok job van nagyon
+    lassu
     """
 
     index = 0

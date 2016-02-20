@@ -1,0 +1,920 @@
+[
+  {
+    "model": "jobs.job",
+    "pk": 1,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 1",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl1.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 2,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 2",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl2.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 3,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 3",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl3.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 4,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 4",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl4.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 5,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 5",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl5.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 6,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 6",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl6.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 7,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 7",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl7.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 8,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 8",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl8.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 9,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 9",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl9.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 10,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 10",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl10.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 11,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 11",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl11.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 12,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 12",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl12.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 13,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 13",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl13.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 14,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 14",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl14.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 15,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 15",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl15.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 16,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 16",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl16.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 17,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 17",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl17.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 18,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 18",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl18.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 19,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 19",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl19.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 20,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 20",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl20.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 21,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 21",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl21.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 22,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 22",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl22.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 23,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 23",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl23.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 24,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 24",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl24.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 25,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 25",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl25.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 26,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 26",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl26.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 27,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 27",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl27.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 28,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 28",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl28.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 29,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 29",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl29.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 30,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 30",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl30.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 31,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 31",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl31.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 32,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 32",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl32.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 33,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 33",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl33.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 34,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 34",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl34.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 35,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 35",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl35.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 36,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 36",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl36.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 37,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 37",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl37.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 38,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 38",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl38.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 39,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 39",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl39.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 40,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 40",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl40.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 41,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 41",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl41.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 42,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 42",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl42.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 43,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 43",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl43.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 44,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 44",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl44.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 45,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 45",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl45.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 46,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 46",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl46.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 47,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 47",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl47.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 48,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 48",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl48.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 49,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 49",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl49.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 50,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 50",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl50.hu",
+      "other_info": ""
+    }
+  },
+  {
+    "model": "jobs.job",
+    "pk": 51,
+    "fields": {
+      "created": "2016-02-17T12:28:23.127Z",
+      "modified": "2016-02-17T12:28:23.127Z",
+      "title": "Fixture Job 51",
+      "job_type": 0,
+      "task": "Fixture Task",
+      "place_of_work": "Fixture Place of Work",
+      "min_salary": 1500,
+      "max_salary": 1700,
+      "working_hours": "Fixture Working Hours",
+      "requirements": "Fixture Requirements",
+      "url": "https://www.fixtureurl51.hu",
+      "other_info": ""
+    }
+  }
+]

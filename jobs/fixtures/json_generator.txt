@@ -1,0 +1,21 @@
+[
+  '{{repeat(51, 51)}}',
+  {
+    model: 'jobs.job',
+    pk: '{{index(1)}}',
+    fields: {
+      created: '2016-02-17T12:28:23.127Z',
+      modified: '2016-02-17T12:28:23.127Z',
+      title: 'Fixture Job {{index(1)}}',
+      job_type: 0,
+      task: 'Fixture Task',
+      place_of_work: 'Fixture Place of Work',
+      min_salary: 1500,
+      max_salary: 1700,
+      working_hours: 'Fixture Working Hours',
+      requirements: 'Fixture Requirements',
+      url: 'https://www.fixtureurl{{index(1)}}.hu',
+      other_info: ''
+    }
+  }
+]

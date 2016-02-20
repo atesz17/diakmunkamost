@@ -88,10 +88,11 @@ class AboutPageTest(TestCase):
 
 class AllJobPageTest(TestCase):
 
+    fixtures = ['jobs.json']
+
     def setUp(self):
         self.non_existent_page = 1234
         self.job_count = 51
-        self.dummy_manager = DummyJobManager(self.job_count)
 
     def test_all_job_page_renders_correct_template(self):
         self.response = self.client.get(reverse(
