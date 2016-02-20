@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import URL, State
+
+admin.site.register(URL)
+admin.site.register(State)
