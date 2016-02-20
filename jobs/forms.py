@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Job
+from .models import JobType
 
 
 class AllJobSearchForm(forms.Form):
@@ -13,8 +13,8 @@ class AllJobSearchForm(forms.Form):
         (CSOKKENO, 'Fizetés szerint csökkenő')
     ]
 
-    job_types = forms.MultipleChoiceField(
-        choices=Job.JOB_TYPES,
+    job_types = forms.ModelMultipleChoiceField(
+        queryset=JobType.objects.all(),
         widget=forms.widgets.CheckboxSelectMultiple,
         required=False,
         label='Munka típusa'

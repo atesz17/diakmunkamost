@@ -28,32 +28,18 @@ class Job(TimeStampedModel):
     Kesobbi prioritas lesz majd ezen mezok rendes megvalositasa
     '''
 
-    KONNYU_FIZIKAI = 0
-    IRODAI = 1
-    TELEFONOS = 2
-    HOSTESS = 3
-    MUSZAKI = 4
-    INFORMATIKAI = 5
-    ARUHAZI_VENDEGLATOS = 6
-    EGYEB = 7
-
     UNDEFINED_SALARY_TEXT = 'Megállapodás szerint'
 
-    JOB_TYPES = [
-        (KONNYU_FIZIKAI, 'Könnyű fizikai'),
-        (IRODAI, 'Irodai'),
-        (TELEFONOS, 'Telefonos'),
-        (HOSTESS, 'Hostess'),
-        (MUSZAKI, 'Műszaki'),
-        (INFORMATIKAI, 'Informatikai'),
-        (ARUHAZI_VENDEGLATOS, 'Áruházi/Vendéglátós'),
-        (EGYEB, 'Egyéb'),
-    ]
     title = models.TextField(verbose_name='Munka megnevezése')
-    job_type = models.IntegerField(
-        choices=JOB_TYPES,
-        db_index=True,
+    job_type = models.ForeignKey(
+        'JobType',
+        on_delete=models.CASCADE,
         verbose_name='Munka típusa'
+    )
+    job_provider = models.ForeignKey(
+        'JobProvider',
+        on_delete=models.CASCADE,
+        verbose_name='Diákmunka Szövetkezet'
     )
     task = models.TextField(verbose_name='Feladat leírása')
     place_of_work = models.TextField(verbose_name='Munkavégzés helye')
@@ -93,3 +79,37 @@ class Job(TimeStampedModel):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        verbose_name = "Diákmunka"
+        verbose_name_plural = "Diákmunkák"
+
+
+class JobType(models.Model):
+
+    name = models.TextField(
+        unique=True,
+        verbose_name="Munka típusa"
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Munkatípus"
+        verbose_name_plural = "Munkatípusok"
+
+
+class JobProvider(models.Model):
+
+    name = models.TextField(
+        unique=True,
+        verbose_name="Szövetkezet neve"
+    )
+
+    def __str__(self):
+            return self.name
+
+    class Meta:
+        verbose_name = "Diákmunka Szövetkezet"
+        verbose_name_plural = "Diákmunka Szövetkezetek"

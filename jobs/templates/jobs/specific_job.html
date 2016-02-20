@@ -4,7 +4,7 @@
 
 {% block content %}
   <h1 id="job-title">{{ job.title }}</h1>
-  <h3 id="job-type">Munka típusa: {{ job.get_job_type_display }}</h3>
+  <h3 id="job-type">Munka típusa: {{ job.job_type }}</h3>
   <h3>Feladat leírása:</h3>
   <p id="job-task">{{ job.task }}</p>
   <h3 id="job-place-of-work">Munkavégzés helye: {{ job.place_of_work }}</h3>

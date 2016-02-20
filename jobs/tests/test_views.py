@@ -47,7 +47,8 @@ class HomePageTest(TestCase):
         element = '<a type="button" class="btn btn-primary btn-lg" href="{0}">'
         self.assertContains(
             self.response,
-            element.format(reverse('jobs:all_jobs', args=(1,))))
+            element.format(reverse('jobs:all_jobs', args=(1,)))
+        )
 
     def test_home_page_job_context_passed(self):
         self.assertIsInstance(self.response.context['jobs'], QuerySet)
@@ -88,7 +89,7 @@ class AboutPageTest(TestCase):
 
 class AllJobPageTest(TestCase):
 
-    fixtures = ['jobs.json']
+    fixtures = ['job_providers.json', 'job_types.json', 'jobs.json']
 
     def setUp(self):
         self.non_existent_page = 1234
@@ -97,39 +98,47 @@ class AllJobPageTest(TestCase):
     def test_all_job_page_renders_correct_template(self):
         self.response = self.client.get(reverse(
             'jobs:all_jobs',
-            args=(1,)))
+            args=(1,))
+        )
         self.assertTemplateUsed(self.response, 'jobs/all_jobs.html')
 
     def test_all_job_page_response_code_is_okay(self):
         self.response = self.client.get(reverse(
             'jobs:all_jobs',
-            args=(1,)))
+            args=(1,))
+        )
         self.assertEqual(self.response.status_code, 200)
 
     def test_all_job_page_has_correct_title(self):
         self.response = self.client.get(reverse(
             'jobs:all_jobs',
-            args=(1,)))
+            args=(1,))
+        )
         self.assertContains(
             self.response,
-            '<title>Összes Munka | Diákmunka most!</title>')
+            '<title>Összes Munka | Diákmunka most!</title>'
+        )
 
     def test_no_prev_link_on_first_page(self):
         self.response = self.client.get(reverse(
             'jobs:all_jobs',
-            args=(1,)))
+            args=(1,))
+        )
         self.assertNotContains(self.response, 'Előző')
         #  Ahhoz, hogy ez a teszt atmenjen, legalabb 2 oldalnyi munka kell
         self.assertContains(
             self.response,
             '<a href="{0}">{1}</a>'.format(
-                reverse('jobs:all_jobs', args=(2,)), 'Következő'))
+                reverse('jobs:all_jobs', args=(2,)),
+                'Következő'
+            )
+        )
 
     def test_no_next_link_on_last_page(self):
         self.response = self.client.get(reverse(
             'jobs:all_jobs',
-            args=(math.ceil(self.job_count/PAGINATION_AMOUNT),)
-        ))
+            args=(math.ceil(self.job_count/PAGINATION_AMOUNT),))
+        )
         self.assertNotContains(self.response, 'Következő')
         #  Ahhoz, hogy ez a teszt atmenjen, legalabb 2 oldalnyi munka kell
         self.assertContains(
@@ -143,8 +152,8 @@ class AllJobPageTest(TestCase):
     def test_prev_and_next_links_are_visible_on_page(self):
         #  Ahhoz, hogy ez a teszt atmenjen, legalabb 3 oldalnyi munka kell
         self.response = self.client.get(reverse(
-            'jobs:all_jobs', args=(2,)
-        ))
+            'jobs:all_jobs', args=(2,))
+        )
         self.assertContains(
             self.response,
             '<a href="{0}">{1}</a>'.format(
@@ -161,12 +170,15 @@ class AllJobPageTest(TestCase):
     def test_non_existent_page_redirects_to_last_page(self):
         self.response = self.client.get(reverse(
             'jobs:all_jobs',
-            args=(self.non_existent_page,)))
+            args=(self.non_existent_page,))
+        )
         self.assertRedirects(
             self.response,
             reverse(
                 'jobs:all_jobs',
-                args=(math.ceil(self.job_count/PAGINATION_AMOUNT),)))
+                args=(math.ceil(self.job_count/PAGINATION_AMOUNT),)
+            )
+        )
 
     def test_all_page_context(self):
         self.response = self.client.get(reverse('jobs:all_jobs', args=(1,)))
@@ -179,7 +191,8 @@ class SpecificJobPageTest(TestCase):
         self.job = DummyJobManager().create_and_save_job()
         self.response = self.client.get(reverse(
             'jobs:specific_job',
-            args=(self.job.id,)))
+            args=(self.job.id,))
+        )
 
     def test_specific_job_page_renders_correct_template(self):
         self.assertTemplateUsed(self.response, 'jobs/specific_job.html')
@@ -187,7 +200,8 @@ class SpecificJobPageTest(TestCase):
     def test_specific_job_page_has_corresponding_title_to_job(self):
         self.assertContains(
             self.response,
-            '<title>{0} | Diákmunka most!</title>'.format(self.job.title))
+            '<title>{0} | Diákmunka most!</title>'.format(self.job.title)
+        )
 
     def test_specific_job_page_uses_job_context(self):
         self.assertIsInstance(self.response.context['job'], Job)
@@ -198,34 +212,41 @@ class SpecificJobPageTest(TestCase):
     def test_specific_job_page_displays_title_as_heading(self):
         self.assertContains(
             self.response,
-            '<h1 id="job-title">{0}</h1>'.format(self.job.title))
+            '<h1 id="job-title">{0}</h1>'.format(self.job.title)
+        )
 
     def test_specific_job_page_displays_job_type(self):
         self.assertContains(
             self.response,
             '<h3 id="job-type">Munka típusa: {0}</h3>'.format(
-                self.job.get_job_type_display()))
+                self.job.job_type
+            )
+        )
 
     def test_specific_job_page_displays_task(self):
         #  ez eleg luzernek tunik, valami jobb megoldas TODO
         self.assertContains(
             self.response,
-            '<h3>Feladat leírása:</h3>')
+            '<h3>Feladat leírása:</h3>'
+        )
         self.assertContains(
             self.response,
-            '<p id="job-task">{0}</p>'.format(self.job.task))
+            '<p id="job-task">{0}</p>'.format(self.job.task)
+        )
 
     def test_specific_job_page_displays_place_of_work(self):
+        element = '<h3 id="job-place-of-work">Munkavégzés helye: {0}</h3>'
         self.assertContains(
             self.response,
-            '<h3 id="job-place-of-work">Munkavégzés helye: {0}</h3>'.format(
-                self.job.place_of_work))
+            element.format(self.job.place_of_work)
+        )
 
     def test_specific_job_page_displays_one_salary_if_min_and_max_is_equal_and_not_zero(self):
+        element = '<h3 id="job-salary">Bérezés: {0} Ft/óra</h3>'
         self.assertContains(
             self.response,
-            '<h3 id="job-salary">Bérezés: {0} Ft/óra</h3>'.format(
-                self.job.min_salary))
+            element.format(self.job.min_salary)
+        )
 
     #  Ezt a ket tesztet majd refaktor TODO
     def test_specific_job_page_displays_multiple_salaries(self):
@@ -233,12 +254,13 @@ class SpecificJobPageTest(TestCase):
         self.job.save()
         self.response = self.client.get(reverse(
             'jobs:specific_job',
-            args=(self.job.id,)))
+            args=(self.job.id,))
+        )
+        element = '<h3 id="job-salary">Bérezés: {0} - {1} Ft/óra</h3>'
         self.assertContains(
             self.response,
-            '<h3 id="job-salary">Bérezés: {0} - {1} Ft/óra</h3>'.format(
-                self.job.min_salary,
-                self.job.max_salary))
+            element.format(self.job.min_salary, self.job.max_salary)
+        )
 
     def test_specific_job_page_displays_message_if_salary_is_zero(self):
         self.job.min_salary = 0
@@ -246,26 +268,31 @@ class SpecificJobPageTest(TestCase):
         self.job.save()
         self.response = self.client.get(reverse(
             'jobs:specific_job',
-            args=(self.job.id,)))
+            args=(self.job.id,))
+        )
         self.assertContains(
             self.response,
             '<h3 id="job-salary">Bérezés: {0}</h3>'.format(
                 Job.UNDEFINED_SALARY_TEXT
-            ))
+            )
+        )
 
     def test_specific_job_page_displays_working_hours(self):
+        element = '<h3 id="job-working-hours">Munkaidő: {0}</h3>'
         self.assertContains(
             self.response,
-            '<h3 id="job-working-hours">Munkaidő: {0}</h3>'.format(
-                self.job.working_hours))
+            element.format(self.job.working_hours)
+        )
 
     def test_specific_job_page_displays_requirements(self):
         self.assertContains(
             self.response,
-            '<h3>Feltételek:</h3>')
+            '<h3>Feltételek:</h3>'
+        )
         self.assertContains(
             self.response,
-            '<p id="job-requirements">{0}</p>'.format(self.job.requirements))
+            '<p id="job-requirements">{0}</p>'.format(self.job.requirements)
+        )
 
     def test_specific_job_page_displays_url_to_actual_job(self):
         element = '<a type="button" id="job-url" class="btn btn-primary btn-lg" href="{0}">Jelentkezem!</a>'
@@ -274,23 +301,28 @@ class SpecificJobPageTest(TestCase):
     def test_specific_job_page_doesnt_displays_other_info_if_it_empty(self):
         self.assertNotContains(
             self.response,
-            '<h3>Egyéb információ:</h3>')
+            '<h3>Egyéb információ:</h3>'
+        )
         self.assertNotContains(
             self.response,
-            '<p id="job-other-info">{0}</p>'.format(self.job.other_info))
+            '<p id="job-other-info">{0}</p>'.format(self.job.other_info)
+        )
 
     def test_specific_job_page_displays_other_info_if_it_is_not_empty(self):
         self.job.other_info = "BLABLABLA"
         self.job.save()
         self.response = self.client.get(reverse(
             'jobs:specific_job',
-            args=(self.job.id,)))
+            args=(self.job.id,))
+        )
         self.assertContains(
             self.response,
-            '<h3>Egyéb információ:</h3>')
+            '<h3>Egyéb információ:</h3>'
+        )
         self.assertContains(
             self.response,
-            '<p id="job-other-info">{0}</p>'.format(self.job.other_info))
+            '<p id="job-other-info">{0}</p>'.format(self.job.other_info)
+        )
 
 
 class SpecificJobPage404Test(TestCase):
@@ -300,8 +332,8 @@ class SpecificJobPage404Test(TestCase):
         self.NOT_VALID_ID = 123456
         self.response = self.client.get(reverse(
             'jobs:specific_job',
-            args=(self.NOT_VALID_ID,)
-        ))
+            args=(self.NOT_VALID_ID,))
+        )
 
     def test_non_existent_job_page_returns_404(self):
         self.assertEqual(self.response.status_code, 404)

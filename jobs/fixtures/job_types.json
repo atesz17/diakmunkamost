@@ -1,0 +1,9 @@
+[
+  {
+    "model": "jobs.jobtype",
+    "pk": 1,
+    "fields": {
+      "name": "Könnyű fizikai"
+    }
+  }
+]

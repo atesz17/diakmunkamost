@@ -19,3 +19,6 @@
     }
   }
 ]
+
+Foreign Key hasznalata fixtureben:
+https://docs.djangoproject.com/en/dev/topics/serialization/#natural-keys

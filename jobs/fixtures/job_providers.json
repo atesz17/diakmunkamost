@@ -1,0 +1,9 @@
+[
+  {
+    "model": "jobs.jobprovider",
+    "pk": 1,
+    "fields": {
+      "name": "Google"
+    }
+  }
+]

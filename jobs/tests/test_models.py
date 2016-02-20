@@ -27,12 +27,6 @@ class JobModelTest(TestCase):
         job.save()
         self.assertEqual(1, Job.objects.all().count())
 
-    def test_cannot_save_job_without_choosing_job_type(self):
-        job = DummyJobManager().create_job()
-        job.job_type = None
-        with self.assertRaises(IntegrityError):
-            job.save()
-
     def test_job_object_can_be_saved_leaving_other_info_field_empty(self):
         job = DummyJobManager().create_job()
         job.other_info = ''

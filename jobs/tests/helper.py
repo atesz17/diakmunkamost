@@ -1,4 +1,4 @@
-from jobs.models import Job
+from jobs.models import Job, JobType, JobProvider
 
 
 class DummyJobManager:
@@ -14,6 +14,8 @@ class DummyJobManager:
     index = 0
 
     def __init__(self, num=0):
+        JobType.objects.create(name="Dummy Job Type")
+        JobProvider.objects.create(name="Dummy Job Provider")
         for i in range(num):
             self.create_and_save_job()
 
@@ -34,7 +36,11 @@ class DummyJobManager:
                 'title',
                 'Dummy title ' + str(DummyJobManager.index)
                 ),
-            job_type=kwargs.get('job_type', 0),
+            job_type=kwargs.get('job_type', JobType.objects.all()[0]),
+            job_provider=kwargs.get(
+                'job_provider',
+                JobProvider.objects.all()[0]
+            ),
             task=kwargs.get('task', 'Dummy Task'),
             place_of_work=kwargs.get('place_of_work', 'Dummy Place of Work'),
             min_salary=kwargs.get('min_salary', 1000),
