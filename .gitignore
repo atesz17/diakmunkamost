@@ -16,3 +16,6 @@ __pycache__/
 # Sass cache
 *.css.map
 .sass-cache/
+
+# PyCharm
+.idea/
