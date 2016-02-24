@@ -5,7 +5,7 @@ class Command(BaseCommand):
     help = 'Starts scraping the specified job page'
 
     def handle(self, *args, **options):
-        self.stdout.write(self.style.SUCCESS("It works!"))
+        scrapers = self.get_scrapers()
         '''
         for scraper in options['scrape']:
             if scraper == "ydiak":
@@ -13,3 +13,6 @@ class Command(BaseCommand):
             else:
                 raise CommandError("{0} named scraper doesnt exist")
         '''
+
+    def get_scrapers(self):
+        pass
