@@ -1,22 +1,28 @@
+from abc import ABCMeta, abstractmethod
 import configparser
 import os
+import inspect
 
 import requests
 
 
-class BaseScraper:
+class BaseScraper(metaclass=ABCMeta):
     '''
-    Minden scrapernek ez lesz ay ososztalya
+    Minden scrapernek ez lesz az ososztalya
     Lehetosing szerint az automatizalhato dolgokat mint pl.: url-ek scrapelese,
     json kiirasa, cache osszehasonlitasa, ezeket itt megvlaositom, a
     specifikusabb reszeket pedig majd az alosztalyban. Lenyeges dolgokat
     egy config fajlbol fogja kiolvasni
     '''
 
-    def __init__(self, config_file="scraper.ini"):
+    def __init__(self, config_file_name="scraper.ini"):
+        config_file = os.path.join(self.get_parent_folder(), config_file_name)
         config = configparser.ConfigParser()
         config.read(config_file)
         self.__read_configuration(config)
+
+    def get_parent_folder(self):
+        return os.path.dirname(inspect.getfile(self.__class__))
 
     def __read_configuration(self, config):
         '''
@@ -33,7 +39,7 @@ class BaseScraper:
         - jobs_json: scrapelt adatok, ezek mennek majd tovabb a converternek
         '''
         config = config['DEFAULT']
-        self.name = config['Name']
+        self.provider_name = config['ProviderName']
         self.all_job_url = config['AllJobUrl']
         self.all_job_container_html_tag = config['AllJobContainerHtmlTag']
         self.single_job_html_tag = config['SingleJobHtmlTag']
@@ -44,18 +50,22 @@ class BaseScraper:
         if self.is_cache_outdated():
             self.gather_info()
 
+    @abstractmethod
     def gather_specific_job_info(self):
         '''
         Ezt a metodust minden scrapernek maganak kell implementalnia, mert
         egy munka leirasanak scrapeleset nem igazan lehet altalanositani
         '''
-        raise NotImplementedError()
+        pass
 
     def is_cache_outdated(self):
         '''
         Megnezzuk, hogy egyaltalan letezik e cache. Ha igen, leszedjuk az
-        all job page html tartalmat, ezutan megnezzuk, hogy valtozott-e
+        all job page html tartalmat, ezutan megnezzuk, hogy valtozott-e DE
+        ELOBB MEGENZZUK A ROBOTS.txt-t
         '''
+        if self.robots_are_forbidden():
+            pass  # TODO
         current_html = requests.get(self.all_job_url).text
         if os.path.isfile(self.cache):
             with open(self.cache) as cache_file:

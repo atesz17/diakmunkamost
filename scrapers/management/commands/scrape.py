@@ -1,8 +1,10 @@
 from django.core.management.base import BaseCommand, CommandError
 
 from scrapers.apps import ScrapersConfig
+from scrapers.basescraper.scraper import  BaseScraper
 
 import importlib
+
 
 class Command(BaseCommand):
     help = 'Starts scraping the specified job page'
@@ -17,16 +19,11 @@ class Command(BaseCommand):
         beimportalja es vegrehajtja oket. Most egyelore az apps.py-ban
         meg kell adni a scraper package-k nevet
         """
-        for package_name in ScrapersConfig.scrapers:
-            scraper_module = ''
-            try:
-                scraper_module = importlib.import_module(
-                    "scrapers.{0}.scraper".format(package_name)
-                )
-            except ImportError:
-                print('No package name was found by the name: {0}, '
-                      'check scrapers/apps.py'.format(package_name))
-                continue
+        for scraper_class in ScrapersConfig.scraper_classes:
+            scraper = scraper_class()
+            if isinstance(scraper, BaseScraper):
+                print('na most jon a scraper.scrape()')
+
 
 
 
