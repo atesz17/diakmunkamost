@@ -7,6 +7,7 @@ from urllib.parse import urljoin
 from urllib.robotparser import RobotFileParser
 
 import requests
+from bs4 import BeautifulSoup
 
 from scrapers.exceptions import ScraperException
 
@@ -54,16 +55,37 @@ class BaseScraper(metaclass=ABCMeta):
             self.get_parent_folder(),
             config.get('Cache', '.cache.html'))
         self.jobs_json = config.get('JSON', 'scraped_jobs.json')
+        self.job_attrs = {}
 
-    def scrape(self):
+    def scrape(self, force_update=True):
+        """
+        Ez aja a keretet maganak a scrapeles folyamatanak. Nem ajanlott
+        felulirni
+        :param force_update: Nem lenyeges, hogy a cache outdatelt vagy nem,
+        mindenkeppen frissiteni fogja a jobokat
+        :return:
+        """
         if not self.is_scraping_allowed():
             """
             azert ezt illene egy kicsit kiboviteni (melyik URL-en, melyik
             szabalynal hasalt el a vizsgalat)
             """
             raise ScraperException("Robots.txt doesn't allow scraping")
-        if self.is_cache_outdated():
-            self.gather_info()
+        if self.is_cache_outdated() or force_update:
+            for job in self.get_jobs():
+                self.gather_specific_job_info(job)
+
+    def get_jobs(self):
+        """
+        All job pagen vegigiteralunk az osszes munkan, amiket tovabb adunk a
+        gather_specific_job_info() fgv-nek
+        :return:
+        """
+        root_html = requests.get(urljoin(self.base_url, self.all_job_url)).text
+        soup = BeautifulSoup(root_html, 'html.parser')
+        for job in soup.find_all("a", class_=self.single_job_href_tag):
+            yield job
+
 
     def is_scraping_allowed(self):
         """
@@ -93,6 +115,8 @@ class BaseScraper(metaclass=ABCMeta):
         Megnezzuk, hogy egyaltalan letezik e cache. Ha igen, leszedjuk az
         all job page html tartalmat, ezutan megnezzuk, hogy valtozott-e DE
         ELOBB MEGENZZUK A ROBOTS.txt-t
+
+        CODE SMELL: 2x van az os.remove()
         '''
         current_html = requests.get(urljoin(
             self.base_url, self.all_job_url)).text
@@ -104,8 +128,10 @@ class BaseScraper(metaclass=ABCMeta):
             self.get_parent_folder(),'.current.html')
         if os.path.isfile(self.cache):
             if filecmp.cmp(self.cache, current_html_file):
+                os.remove(current_html_file)
                 return False
         self.__update_cache(current_html)
+        os.remove(current_html_file)
         return True
 
     def __update_cache(self, new_data):

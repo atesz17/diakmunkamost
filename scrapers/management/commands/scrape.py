@@ -22,7 +22,7 @@ class Command(BaseCommand):
         for scraper_class in ScrapersConfig.scraper_classes:
             scraper = scraper_class()
             if isinstance(scraper, BaseScraper):
-                scraper.scrape()
+                scraper.scrape(force_update=True)
 
 
 
