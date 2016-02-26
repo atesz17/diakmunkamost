@@ -1,9 +1,14 @@
 from abc import ABCMeta, abstractmethod
 import configparser
-import os
+import filecmp
 import inspect
+import os
+from urllib.parse import urljoin
+from urllib.robotparser import RobotFileParser
 
 import requests
+
+from scrapers.exceptions import ScraperException
 
 
 class BaseScraper(metaclass=ABCMeta):
@@ -40,15 +45,40 @@ class BaseScraper(metaclass=ABCMeta):
         '''
         config = config['DEFAULT']
         self.provider_name = config['ProviderName']
+        self.base_url = config['BaseUrl']
         self.all_job_url = config['AllJobUrl']
         self.all_job_container_html_tag = config['AllJobContainerHtmlTag']
         self.single_job_html_tag = config['SingleJobHtmlTag']
-        self.cache = config.get('Cache', 'cache.html')
+        self.single_job_href_tag = config['SingleJobHrefTag']
+        self.cache = os.path.join(
+            self.get_parent_folder(),
+            config.get('Cache', '.cache.html'))
         self.jobs_json = config.get('JSON', 'scraped_jobs.json')
 
     def scrape(self):
+        if not self.is_scraping_allowed():
+            """
+            azert ezt illene egy kicsit kiboviteni (melyik URL-en, melyik
+            szabalynal hasalt el a vizsgalat)
+            """
+            raise ScraperException("Robots.txt doesn't allow scraping")
         if self.is_cache_outdated():
             self.gather_info()
+
+    def is_scraping_allowed(self):
+        """
+        Megnezi, hogy a robots.txt nem tiltja-e a scrapelest. Nem igazan teljes
+        az ellenorzes, mert csak az all job url-t vizsgalja.
+        :return:
+        """
+        robot_parser = RobotFileParser()
+        robots_url = urljoin(self.base_url, 'robots.txt')
+        robot_parser.set_url(robots_url)
+        robot_parser.read()
+        if robot_parser.can_fetch('*', urljoin(
+                self.base_url, self.all_job_url)):
+            return True
+        return False
 
     @abstractmethod
     def gather_specific_job_info(self):
@@ -64,14 +94,17 @@ class BaseScraper(metaclass=ABCMeta):
         all job page html tartalmat, ezutan megnezzuk, hogy valtozott-e DE
         ELOBB MEGENZZUK A ROBOTS.txt-t
         '''
-        if self.robots_are_forbidden():
-            pass  # TODO
-        current_html = requests.get(self.all_job_url).text
+        current_html = requests.get(urljoin(
+            self.base_url, self.all_job_url)).text
+        with open(
+                os.path.join(self.get_parent_folder(),'.current.html'),
+                'w') as f:
+            f.write(current_html)
+        current_html_file = os.path.join(
+            self.get_parent_folder(),'.current.html')
         if os.path.isfile(self.cache):
-            with open(self.cache) as cache_file:
-                cache_html = cache_file.read()
-                if current_html == cache_html:
-                    return False
+            if filecmp.cmp(self.cache, current_html_file):
+                return False
         self.__update_cache(current_html)
         return True
 

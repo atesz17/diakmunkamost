@@ -19,3 +19,7 @@ __pycache__/
 
 # PyCharm
 .idea/
+
+# Scraper cache
+.cache.html
+.current.html
