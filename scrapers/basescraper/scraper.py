@@ -84,7 +84,7 @@ class BaseScraper(metaclass=ABCMeta):
         root_html = requests.get(urljoin(self.base_url, self.all_job_url)).text
         soup = BeautifulSoup(root_html, 'html.parser')
         for job in soup.find_all("a", class_=self.single_job_href_tag):
-            yield job
+            yield requests.get(job['href']).text
 
 
     def is_scraping_allowed(self):
@@ -103,7 +103,7 @@ class BaseScraper(metaclass=ABCMeta):
         return False
 
     @abstractmethod
-    def gather_specific_job_info(self):
+    def gather_specific_job_info(self, job):
         '''
         Ezt a metodust minden scrapernek maganak kell implementalnia, mert
         egy munka leirasanak scrapeleset nem igazan lehet altalanositani
