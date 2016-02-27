@@ -17,6 +17,10 @@ class URL(TimeStampedModel):
         verbose_name="Scraping státusza"
     )
 
+    def __str__(self):
+        s = str(self.url).split("/")
+        return s[2] + ": " + s[-2]
+
 
 class State(TimeStampedModel):
 
@@ -24,3 +28,6 @@ class State(TimeStampedModel):
         unique=True,
         verbose_name="Státusz"
     )
+
+    def __str__(self):
+        return self.state

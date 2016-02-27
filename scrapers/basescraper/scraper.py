@@ -2,6 +2,7 @@ from abc import ABCMeta, abstractmethod
 import configparser
 import filecmp
 import inspect
+import json
 import os
 from urllib.parse import urljoin
 from urllib.robotparser import RobotFileParser
@@ -10,6 +11,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from scrapers.exceptions import ScraperException
+from scrapers.models import URL, State
 
 
 class BaseScraper(metaclass=ABCMeta):
@@ -42,7 +44,7 @@ class BaseScraper(metaclass=ABCMeta):
         iteralni
         - cache: eltaroljuk a legutobbi scrapelt oldal html contentet, hogy
         csak akkor szedjuk le uj infot, amikor tenyleg valtozott az oldal
-        - jobs_json: scrapelt adatok, ezek mennek majd tovabb a converternek
+        - json: scrapelt adatok, ezek mennek majd tovabb a converternek
         """
         config = config['DEFAULT']
         self.provider_name = config['ProviderName']
@@ -56,7 +58,9 @@ class BaseScraper(metaclass=ABCMeta):
         self.cache = os.path.join(
             self.get_parent_folder(),
             config.get('Cache', '.cache.html'))
-        self.jobs_json = config.get('JSON', 'scraped_jobs.json')
+        self.json = os.path.join(
+            self.get_parent_folder(),
+            config.get('JSON', '.scraped_jobs.json'))
         self.job_attrs = {}
 
     def scrape(self, force_update=True):
@@ -74,8 +78,34 @@ class BaseScraper(metaclass=ABCMeta):
             """
             raise ScraperException("Robots.txt doesn't allow scraping")
         if self.is_cache_outdated() or force_update:
-            for job in self.get_jobs():
-                self.gather_specific_job_info(job)
+            self.remove_old_json()
+            new_json = []
+            for job_html, job_url in self.get_jobs():
+                self.gather_specific_job_info(job_html)
+                self.job_attrs['url'] = job_url
+                self.update_scraped_db(job_url)
+                new_json.append(self.job_attrs)
+            self.write_json(new_json)
+
+    def write_json(self, new_json):
+        with open(self.json, "w", encoding="utf8") as json_f:
+            json.dump(new_json, json_f, ensure_ascii=False)
+
+    def remove_old_json(self):
+        if os.path.isfile(self.json):
+            os.remove(self.json)
+
+    def update_scraped_db(self, job_url):
+        """
+        Felvesszuk a job-ot a db-be, es beallituk a statuszat scraped-re
+        :param job:
+        :return:
+        """
+        url_obj = URL()
+        url_obj.url = job_url
+        url_obj.state = State.objects.get_or_create(state="scraped")[0]
+        url_obj.save()
+
 
     def get_jobs(self):
         """
@@ -86,7 +116,16 @@ class BaseScraper(metaclass=ABCMeta):
         root_html = requests.get(urljoin(self.base_url, self.all_job_url)).text
         soup = BeautifulSoup(root_html, 'html.parser')
         for job in soup.find_all("a", class_=self.single_job_href_tag):
-            yield requests.get(job['href']).text
+            if self.is_job_already_scraped(job['href']):
+                continue
+            yield requests.get(job['href']).text, job['href']
+
+    def is_job_already_scraped(self, job_url):
+        try:
+            job = URL.objects.get(pk=job_url)
+            return True
+        except URL.DoesNotExist:
+            return False
 
     def is_scraping_allowed(self):
         """

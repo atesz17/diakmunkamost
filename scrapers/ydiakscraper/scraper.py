@@ -12,6 +12,10 @@ class YDiakScraper(BaseScraper):
 
         Egyelore csak pesti munkakat parsolunk, szval alapbol visszaterunk,
         ha nem pesti munkarol van szo
+
+        Ez a parsing nem dobhat errort, mert minden find() metodus None-nal
+        ter vissza. Ezt majd a converter fogja lekezelni, hogy mi a teendo,
+        ha valamelyik ertek None
         """
         soup = BeautifulSoup(job, 'html.parser')
         self.job_attrs['place_of_work'] = soup.find(
@@ -31,4 +35,3 @@ class YDiakScraper(BaseScraper):
         self.job_attrs['salary'] = soup.find(itemprop="baseSalary").get_text()
         self.job_attrs['other'] = soup.find(
             itemprop="baseSalary").find_next('p').get_text()
-        print('')
