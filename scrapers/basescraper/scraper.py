@@ -13,13 +13,13 @@ from scrapers.exceptions import ScraperException
 
 
 class BaseScraper(metaclass=ABCMeta):
-    '''
+    """
     Minden scrapernek ez lesz az ososztalya
     Lehetosing szerint az automatizalhato dolgokat mint pl.: url-ek scrapelese,
     json kiirasa, cache osszehasonlitasa, ezeket itt megvlaositom, a
     specifikusabb reszeket pedig majd az alosztalyban. Lenyeges dolgokat
     egy config fajlbol fogja kiolvasni
-    '''
+    """
 
     def __init__(self, config_file_name="scraper.ini"):
         config_file = os.path.join(self.get_parent_folder(), config_file_name)
@@ -31,7 +31,7 @@ class BaseScraper(metaclass=ABCMeta):
         return os.path.dirname(inspect.getfile(self.__class__))
 
     def __read_configuration(self, config):
-        '''
+        """
         Azoknal az ertekeknel, ami mindenkeppen specifikus, ott a [] operatort
         kell hasznalni, ahol elkepzelheto deafult value, ott a get()-et
         - name: Tudjuk, hogy melyik oldalt szedjuk le
@@ -43,12 +43,14 @@ class BaseScraper(metaclass=ABCMeta):
         - cache: eltaroljuk a legutobbi scrapelt oldal html contentet, hogy
         csak akkor szedjuk le uj infot, amikor tenyleg valtozott az oldal
         - jobs_json: scrapelt adatok, ezek mennek majd tovabb a converternek
-        '''
+        """
         config = config['DEFAULT']
         self.provider_name = config['ProviderName']
         self.base_url = config['BaseUrl']
         self.all_job_url = config['AllJobUrl']
-        self.all_job_container_html_tag = config['AllJobContainerHtmlTag']
+        self.all_job_container_html_element = \
+            config['AllJobContainerHtmlElement']
+        self.all_job_container_html_class = config['AllJobContainerHtmlClass']
         self.single_job_html_tag = config['SingleJobHtmlTag']
         self.single_job_href_tag = config['SingleJobHrefTag']
         self.cache = os.path.join(
@@ -86,7 +88,6 @@ class BaseScraper(metaclass=ABCMeta):
         for job in soup.find_all("a", class_=self.single_job_href_tag):
             yield requests.get(job['href']).text
 
-
     def is_scraping_allowed(self):
         """
         Megnezi, hogy a robots.txt nem tiltja-e a scrapelest. Nem igazan teljes
@@ -104,33 +105,37 @@ class BaseScraper(metaclass=ABCMeta):
 
     @abstractmethod
     def gather_specific_job_info(self, job):
-        '''
+        """
         Ezt a metodust minden scrapernek maganak kell implementalnia, mert
         egy munka leirasanak scrapeleset nem igazan lehet altalanositani
-        '''
+        """
         pass
 
     def is_cache_outdated(self):
-        '''
+        """
         Megnezzuk, hogy egyaltalan letezik e cache. Ha igen, leszedjuk az
         all job page html tartalmat, ezutan megnezzuk, hogy valtozott-e DE
         ELOBB MEGENZZUK A ROBOTS.txt-t
 
         CODE SMELL: 2x van az os.remove()
-        '''
+        """
         current_html = requests.get(urljoin(
             self.base_url, self.all_job_url)).text
+        soup = BeautifulSoup(current_html, 'html.parser').find(
+            self.all_job_container_html_element,
+            class_=self.all_job_container_html_class
+        )
         with open(
                 os.path.join(self.get_parent_folder(),'.current.html'),
                 'w') as f:
-            f.write(current_html)
+            f.write(str(soup))
         current_html_file = os.path.join(
             self.get_parent_folder(),'.current.html')
         if os.path.isfile(self.cache):
             if filecmp.cmp(self.cache, current_html_file):
                 os.remove(current_html_file)
                 return False
-        self.__update_cache(current_html)
+        self.__update_cache(str(soup))
         os.remove(current_html_file)
         return True
 

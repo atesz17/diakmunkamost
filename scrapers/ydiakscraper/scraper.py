@@ -6,13 +6,13 @@ from bs4 import BeautifulSoup
 class YDiakScraper(BaseScraper):
 
     def gather_specific_job_info(self, job):
-        '''
+        """
         Ezt a metodust minden scrapernek maganak kell implementalnia, mert
         egy munka leirasanak scrapeleset nem igazan lehet altalanositani
 
         Egyelore csak pesti munkakat parsolunk, szval alapbol visszaterunk,
         ha nem pesti munkarol van szo
-        '''
+        """
         soup = BeautifulSoup(job, 'html.parser')
         self.job_attrs['place_of_work'] = soup.find(
             itemprop="addressRegion").get_text()
