@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'jobs',
     'scrapers',
+    'converters'
 ]
 
 MIDDLEWARE_CLASSES = [

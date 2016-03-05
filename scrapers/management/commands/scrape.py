@@ -3,8 +3,6 @@ from django.core.management.base import BaseCommand, CommandError
 from scrapers.apps import ScrapersConfig
 from scrapers.basescraper.scraper import  BaseScraper
 
-import importlib
-
 
 class Command(BaseCommand):
     help = 'Starts scraping the specified job page'

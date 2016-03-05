@@ -1,0 +1,2 @@
+class AbstractConverter:
+    pass
