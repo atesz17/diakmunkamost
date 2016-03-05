@@ -17,6 +17,10 @@ class URL(TimeStampedModel):
         verbose_name="Scraping státusza"
     )
 
+    scraped_data = models.TextField(
+        verbose_name="Scrapelt JSON"
+    )
+
     def __str__(self):
         s = str(self.url).split("/")
         return s[2] + ": " + s[-2]

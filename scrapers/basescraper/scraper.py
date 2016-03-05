@@ -77,35 +77,23 @@ class BaseScraper(metaclass=ABCMeta):
             szabalynal hasalt el a vizsgalat)
             """
             raise ScraperException("Robots.txt doesn't allow scraping")
-        if self.is_cache_outdated() or force_update:
-            self.remove_old_json()
-            new_json = []
+        if force_update or self.is_cache_outdated():
             for job_html, job_url in self.get_jobs():
                 self.gather_specific_job_info(job_html)
                 self.job_attrs['url'] = job_url
-                self.update_scraped_db(job_url)
-                new_json.append(self.job_attrs)
-            self.write_json(new_json)
+                self.update_scraped_db()
 
-    def write_json(self, new_json):
-        with open(self.json, "w", encoding="utf8") as json_f:
-            json.dump(new_json, json_f, ensure_ascii=False)
-
-    def remove_old_json(self):
-        if os.path.isfile(self.json):
-            os.remove(self.json)
-
-    def update_scraped_db(self, job_url):
+    def update_scraped_db(self):
         """
         Felvesszuk a job-ot a db-be, es beallituk a statuszat scraped-re
         :param job:
         :return:
         """
         url_obj = URL()
-        url_obj.url = job_url
+        url_obj.url = self.job_attrs['url']
         url_obj.state = State.objects.get_or_create(state="scraped")[0]
+        url_obj.scraped_data = json.dumps(self.job_attrs, ensure_ascii=False)
         url_obj.save()
-
 
     def get_jobs(self):
         """
