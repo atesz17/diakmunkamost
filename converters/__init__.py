@@ -1,2 +1,2 @@
 from converters.abstractconverter.converter import AbstractConverter
-from converters.ydiakconverter.converter import YDiakConverter
+#from converters.ydiakconverter.converter import YDiakConverter

@@ -17,6 +17,10 @@ class URL(TimeStampedModel):
         verbose_name="Scraping státusza"
     )
 
+    provider_name = models.TextField(
+        verbose_name="Diakszövetkezet rövid neve"
+    )
+
     scraped_data = models.TextField(
         verbose_name="Scrapelt JSON"
     )
