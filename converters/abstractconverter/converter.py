@@ -42,13 +42,14 @@ class AbstractConverter(metaclass=ABCMeta):
                 provider__name=self.provider_name):
             self.title = self.convert_title(scraped_job)
             self.job_type = self.convert_job_type(scraped_job)
+            # es majd db insert legutolso lepeskent
 
     def convert_title(self, scraped_job):
         raw_title = json.loads(scraped_job.scraped_data)['title']
         return raw_title
 
     def convert_job_type(self, scraped_job):
-        raw_job_type = json.loads(scraped_job.scraped_data['job_type'])
+        raw_job_type = json.loads(scraped_job.scraped_data)['job_type']
         if "fizikai" in raw_job_type.lower():
             return Job.PREDEFINED_JOB_TYPES['fizikai']
         elif "irodai" in raw_job_type.lower():

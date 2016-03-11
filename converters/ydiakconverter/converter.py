@@ -10,7 +10,7 @@ class YDiakConverter(AbstractConverter):
     def convert_job_type(self, scraped_job):
         super_ret = super(YDiakConverter, self).convert_job_type(scraped_job)
         if super_ret == "Egyéb":
-            raw_job_type = json.loads(scraped_job.scraped_data['job_type'])
+            raw_job_type = json.loads(scraped_job.scraped_data)['job_type']
             if "bolti" in raw_job_type.lower():
                 return Job.PREDEFINED_JOB_TYPES['aruhazi/vendeglatos']
             if "pénztáros" in raw_job_type.lower():
