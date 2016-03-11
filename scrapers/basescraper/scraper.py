@@ -82,6 +82,8 @@ class BaseScraper(metaclass=ABCMeta):
                 self.gather_specific_job_info(job_html)
                 self.job_attrs['url'] = job_url
                 self.update_scraped_db()
+                return
+        print("Nem valtozott az oldal (cache), vagy force_update van")
 
     def update_scraped_db(self):
         """

@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import URL, State
+from .models import URL, State, Provider
 
 admin.site.register(URL)
 admin.site.register(State)
+admin.site.register(Provider)

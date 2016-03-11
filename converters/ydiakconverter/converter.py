@@ -13,5 +13,6 @@ class YDiakConverter(AbstractConverter):
         hogy a statusza az adott munkanak converter_error
         :return:
         """
-        for scraped_job in URL.objects.filter(provider_name=self.provider_name):
-            pass # Itt jon maga a mezonkenti scrapeles
+        for scraped_job in URL.objects.filter(
+                provider__name=self.provider_name):
+            print(scraped_job.url)

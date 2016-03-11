@@ -17,7 +17,7 @@ class URL(TimeStampedModel):
         verbose_name="Scraping státusza"
     )
 
-    provider_name = models.ForeignKey(
+    provider = models.ForeignKey(
         'Provider',
         on_delete=models.CASCADE,
         verbose_name="Diakszövetkezet rövid neve"
