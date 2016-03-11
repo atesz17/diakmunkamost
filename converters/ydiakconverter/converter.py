@@ -1,4 +1,4 @@
-from converters import AbstractConverter
+from converters.abstractconverter.converter import AbstractConverter
 
 from jobs.models import Job
 
