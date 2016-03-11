@@ -17,7 +17,9 @@ class URL(TimeStampedModel):
         verbose_name="Scraping státusza"
     )
 
-    provider_name = models.TextField(
+    provider_name = models.ForeignKey(
+        'Provider',
+        on_delete=models.CASCADE,
         verbose_name="Diakszövetkezet rövid neve"
     )
 
@@ -39,3 +41,13 @@ class State(TimeStampedModel):
 
     def __str__(self):
         return self.state
+
+
+class Provider(TimeStampedModel):
+
+    name = models.TextField(
+        verbose_name="Diakszövetkezet rövid neve"
+    )
+
+    def __str__(self):
+        return self.name

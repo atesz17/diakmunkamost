@@ -11,7 +11,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from scrapers.exceptions import ScraperException
-from scrapers.models import URL, State
+from scrapers.models import URL, State, Provider
 
 
 class BaseScraper(metaclass=ABCMeta):
@@ -92,7 +92,9 @@ class BaseScraper(metaclass=ABCMeta):
         url_obj = URL()
         url_obj.url = self.job_attrs['url']
         url_obj.state = State.objects.get_or_create(state="scraped")[0]
-        url_obj.provider_name = self.provider_name
+        url_obj.provider_name = Provider.objects.get_or_create(
+            name = self.provider_name
+        )[0]
         url_obj.scraped_data = json.dumps(self.job_attrs, ensure_ascii=False)
         url_obj.save()
 
