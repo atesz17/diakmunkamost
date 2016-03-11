@@ -30,6 +30,17 @@ class Job(TimeStampedModel):
 
     UNDEFINED_SALARY_TEXT = 'Megállapodás szerint'
 
+    PREDEFINED_JOB_TYPES = {
+        "konnyu_fizikai": "Könnyű Fizikai",
+        "irodai": "Irodai",
+        "telefonos": "Telefonos",
+        "hostess": "Hostess",
+        "muszaki": "Műszaki",
+        "informatikai": "Informatikai",
+        "aruhazi/vendeglatos": "Áruházi/Vendéglátós",
+        "egyeb": "Egyéb"
+    }
+
     title = models.TextField(verbose_name='Munka megnevezése')
     job_type = models.ForeignKey(
         'JobType',
