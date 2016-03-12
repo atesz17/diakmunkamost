@@ -20,6 +20,10 @@ class AbstractConverter(metaclass=ABCMeta):
         self.place_of_work = None
         self.min_salary = None
         self.max_salary = None
+        self.requirements = None
+        self.working_hours = None
+        self.other = None
+        self.url = None
         config_file = os.path.join(self.get_parent_folder(), config_file_name)
         config = configparser.ConfigParser()
         config.read(config_file)
@@ -49,6 +53,10 @@ class AbstractConverter(metaclass=ABCMeta):
             self.place_of_work = "Pest"
             # es majd db insert legutolso lepeskent
             self.min_salary, self.max_salary = self.convert_salary(scraped_job)
+            self.requirements = self.convert_requirements(scraped_job)
+            self.working_hours = self.convert_working_hours(scraped_job)
+            self.other = self.convert_other(scraped_job)
+            self.url = scraped_job.url
 
     def convert_title(self, scraped_job):
         return json.loads(scraped_job.scraped_data)['title']
@@ -79,3 +87,12 @@ class AbstractConverter(metaclass=ABCMeta):
     @abstractmethod
     def convert_salary(self, scraped_job):
         pass
+
+    def convert_requirements(self, scraped_job):
+        return json.loads(scraped_job.scraped_data)['requirements']
+
+    def convert_working_hours(self, scraped_job):
+        return json.loads(scraped_job.scraped_data)['working_hours']
+
+    def convert_other(self, scraped_job):
+        return json.loads(scraped_job.scraped_data)['other']
