@@ -79,11 +79,15 @@ class BaseScraper(metaclass=ABCMeta):
             raise ScraperException("Robots.txt doesn't allow scraping")
         if force_update or self.is_cache_outdated():
             for job_html, job_url in self.get_jobs():
-                self.gather_specific_job_info(job_html)
+                try:
+                    self.gather_specific_job_info(job_html)
+                except ScraperException as err:
+                    print(err)
+                    continue # nem pesti munka volt
                 self.job_attrs['url'] = job_url
                 self.update_scraped_db()
-                return
-        print("Nem valtozott az oldal (cache), vagy force_update van")
+        else:
+            print("Nem valtozott az oldal (cache)")
 
     def update_scraped_db(self):
         """
@@ -94,7 +98,7 @@ class BaseScraper(metaclass=ABCMeta):
         url_obj = URL()
         url_obj.url = self.job_attrs['url']
         url_obj.state = State.objects.get_or_create(state="scraped")[0]
-        url_obj.provider_name = Provider.objects.get_or_create(
+        url_obj.provider = Provider.objects.get_or_create(
             name = self.provider_name
         )[0]
         url_obj.scraped_data = json.dumps(self.job_attrs, ensure_ascii=False)

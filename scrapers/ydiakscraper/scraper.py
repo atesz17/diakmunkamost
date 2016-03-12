@@ -1,4 +1,5 @@
 from scrapers.basescraper.scraper import BaseScraper
+from scrapers.exceptions import ScraperException
 
 from bs4 import BeautifulSoup
 
@@ -21,8 +22,8 @@ class YDiakScraper(BaseScraper):
         self.job_attrs['place_of_work'] = soup.find(
             itemprop="addressRegion").get_text()
         #  csunya a beegetett ertek, egyelore csak pesti munkak erdekelnek
-        if not 'pest' in self.job_attrs['place_of_work'].lower():
-            return
+        if 'pest' not in self.job_attrs['place_of_work'].lower():
+            raise ScraperException("Nem pesti a scrapelt job")
         self.job_attrs['title'] = soup.find(itemprop="title").get_text()
         self.job_attrs['job_type'] = soup.find(
             itemprop="occupationalCategory").get_text()

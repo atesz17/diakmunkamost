@@ -16,6 +16,7 @@ class AbstractConverter(metaclass=ABCMeta):
         self.title = None
         self.job_type = None
         self.task = None
+        self.place_of_work = None
         config_file = os.path.join(self.get_parent_folder(), config_file_name)
         config = configparser.ConfigParser()
         config.read(config_file)
@@ -41,6 +42,8 @@ class AbstractConverter(metaclass=ABCMeta):
             self.title = self.convert_title(scraped_job)
             self.job_type = self.convert_job_type(scraped_job)
             self.task = self.convert_task(scraped_job)
+            # csak pesti munka, nem is ellenorizzuk a valodi erteket
+            self.place_of_work = "Pest"
             # es majd db insert legutolso lepeskent
 
     def convert_title(self, scraped_job):
@@ -67,4 +70,4 @@ class AbstractConverter(metaclass=ABCMeta):
         return Job.PREDEFINED_JOB_TYPES['egyeb']
 
     def convert_task(self, scraped_job):
-        pass
+        return json.loads(scraped_job.scraped_data)['task']
