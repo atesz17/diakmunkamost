@@ -1,4 +1,4 @@
-from abc import ABCMeta
+from abc import ABCMeta, abstractmethod
 import configparser
 import os
 import inspect
@@ -6,6 +6,7 @@ import json
 
 from jobs.models import Job
 from scrapers.models import URL
+
 
 class AbstractConverter(metaclass=ABCMeta):
     """
@@ -17,6 +18,8 @@ class AbstractConverter(metaclass=ABCMeta):
         self.job_type = None
         self.task = None
         self.place_of_work = None
+        self.min_salary = None
+        self.max_salary = None
         config_file = os.path.join(self.get_parent_folder(), config_file_name)
         config = configparser.ConfigParser()
         config.read(config_file)
@@ -45,6 +48,7 @@ class AbstractConverter(metaclass=ABCMeta):
             # csak pesti munka, nem is ellenorizzuk a valodi erteket
             self.place_of_work = "Pest"
             # es majd db insert legutolso lepeskent
+            self.min_salary, self.max_salary = self.convert_salary(scraped_job)
 
     def convert_title(self, scraped_job):
         return json.loads(scraped_job.scraped_data)['title']
@@ -71,3 +75,7 @@ class AbstractConverter(metaclass=ABCMeta):
 
     def convert_task(self, scraped_job):
         return json.loads(scraped_job.scraped_data)['task']
+
+    @abstractmethod
+    def convert_salary(self, scraped_job):
+        pass
