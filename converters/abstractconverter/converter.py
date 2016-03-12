@@ -12,12 +12,10 @@ class AbstractConverter(metaclass=ABCMeta):
     Abstract osztaly, ez mindegyik Converter osztalynak az alapja
     """
 
-    def __init__(self):
+    def __init__(self, config_file_name="converter.ini"):
         self.title = None
         self.job_type = None
-        self.provider_name = None
-
-    def __init__(self, config_file_name="converter.ini"):
+        self.task = None
         config_file = os.path.join(self.get_parent_folder(), config_file_name)
         config = configparser.ConfigParser()
         config.read(config_file)
@@ -42,11 +40,11 @@ class AbstractConverter(metaclass=ABCMeta):
                 provider__name=self.provider_name):
             self.title = self.convert_title(scraped_job)
             self.job_type = self.convert_job_type(scraped_job)
+            self.task = self.convert_task(scraped_job)
             # es majd db insert legutolso lepeskent
 
     def convert_title(self, scraped_job):
-        raw_title = json.loads(scraped_job.scraped_data)['title']
-        return raw_title
+        return json.loads(scraped_job.scraped_data)['title']
 
     def convert_job_type(self, scraped_job):
         raw_job_type = json.loads(scraped_job.scraped_data)['job_type']
@@ -67,3 +65,6 @@ class AbstractConverter(metaclass=ABCMeta):
         elif "vendéglátos" in raw_job_type.lower():
             return Job.PREDEFINED_JOB_TYPES['aruhazi/vendeglatos']
         return Job.PREDEFINED_JOB_TYPES['egyeb']
+
+    def convert_task(self, scraped_job):
+        pass
