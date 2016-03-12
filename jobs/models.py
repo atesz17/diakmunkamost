@@ -31,7 +31,7 @@ class Job(TimeStampedModel):
     UNDEFINED_SALARY_TEXT = 'Megállapodás szerint'
 
     PREDEFINED_JOB_TYPES = {
-        "konnyu_fizikai": "Könnyű Fizikai",
+        "fizikai": "Könnyű Fizikai",
         "irodai": "Irodai",
         "telefonos": "Telefonos",
         "hostess": "Hostess",

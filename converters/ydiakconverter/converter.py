@@ -28,12 +28,19 @@ class YDiakConverter(AbstractConverter):
         raw_salary = json.loads(scraped_job.scraped_data)['salary']
         raw_salary = raw_salary.replace(" ", "")
         raw_salary = raw_salary.replace("Ft", "")
+        raw_salary = raw_salary.replace("Forint", "")
         min_max_salary = raw_salary.split("/")[0]
         salary_list = min_max_salary.split("-")
         if len(salary_list) == 1:
-            return salary_list[0], salary_list[0]
+            try:
+                return int(salary_list[0]), int(salary_list[0])
+            except ValueError:
+                raise ConverterException("Nem integer a salary")
         elif len(salary_list) == 2:
-            return salary_list[0], salary_list[1]
+            try:
+                return int(salary_list[0]), int(salary_list[1])
+            except ValueError:
+                raise ConverterException("Nem integer a salary")
         else:
             raise ConverterException(
                 "Nem sikerult parsolni a salary-t"

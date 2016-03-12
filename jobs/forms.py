@@ -1,6 +1,7 @@
 from django import forms
 
 from .models import JobType
+from .models import Job
 
 
 class AllJobSearchForm(forms.Form):
@@ -29,3 +30,10 @@ class AllJobSearchForm(forms.Form):
         widget=forms.widgets.RadioSelect,
         label="Rendezés fizetés szerint",
     )
+
+
+class JobForm(forms.ModelForm):
+
+    class Meta:
+        model = Job
+        exclude = ("job_type", "job_provider")
