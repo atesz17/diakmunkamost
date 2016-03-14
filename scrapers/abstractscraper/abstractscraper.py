@@ -34,7 +34,7 @@ class AbstractScraper(metaclass=ABCMeta):
         Nem modul szintu loggolas, hanem osztalyszintut tesz lehetove
         :return: logger objektum
         """
-        name = '.'.join([__name__, self.__class__.__name__])
+        name = '.'.join(["scrapers", self.__class__.__name__])
         return logging.getLogger(name)
 
     def read_configuration(self, config):

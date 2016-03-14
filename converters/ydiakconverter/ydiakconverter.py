@@ -19,6 +19,8 @@ class YDiakConverter(AbstractConverter):
             'irodai': ['ibm']
         }
 
+
+
     def convert_job_type(self, scraped_job):
         super_ret = super(YDiakConverter, self).convert_job_type(scraped_job)
         if super_ret == "Egyéb":
@@ -36,17 +38,13 @@ class YDiakConverter(AbstractConverter):
         )
         min_max_salary = raw_salary.split("/")[0]
         salary_list = min_max_salary.split("-")
-        if len(salary_list) == 1:
-            try:
+        try:
+            if len(salary_list) == 1:
                 return int(salary_list[0]), int(salary_list[0])
-            except ValueError:
-                raise ConverterException("Nem integer a salary")
-        elif len(salary_list) == 2:
-            try:
+            elif len(salary_list) == 2:
                 return int(salary_list[0]), int(salary_list[1])
-            except ValueError:
-                raise ConverterException("Nem integer a salary")
-        else:
-            raise ConverterException(
-                "Nem sikerult parsolni a salary-t"
-            )
+            else:
+                raise ConverterException()
+        except (ValueError, ConverterException):
+            #  Ezt azert valahogy jobban illene majd lekezelni
+            return 0, 0

@@ -1,8 +1,8 @@
 from abc import ABCMeta, abstractmethod
 import configparser
 import os
-import inspect
 import json
+import logging
 
 from converters.exceptions import ConverterException
 from helpers.methods import get_dynamic_parent_folder
@@ -34,6 +34,15 @@ class AbstractConverter(metaclass=ABCMeta):
         config.read(config_file)
         self.read_configuration(config)
 
+    @property
+    def logger(self):
+        """
+        Nem modul szintu loggolas, hanem osztalyszintut tesz lehetove
+        :return: logger objektum
+        """
+        name = '.'.join(["converters", self.__class__.__name__])
+        return logging.getLogger(name)
+
     def read_configuration(self, config):
         config = config['DEFAULT']
         self.provider_name = config['ProviderName']
@@ -53,6 +62,7 @@ class AbstractConverter(metaclass=ABCMeta):
         )
         for scraped_job in scraped_jobs:
             try:
+                self.logger.info("Converting job: {0}".format(scraped_job))
                 self.title = self.convert_title(scraped_job)
                 self.job_type = self.convert_job_type(scraped_job)
                 self.task = self.convert_task(scraped_job)
@@ -73,7 +83,9 @@ class AbstractConverter(metaclass=ABCMeta):
                 scraped_job.state = State.objects.get_or_create(
                     state="converter_error"
                 )[0]
-                print("Converter error (salary)")
+                self.logger.error("Converter error with {0} error: {1}".format(
+                    scraped_job, err
+                ))
                 continue
             finally:
                 scraped_job.save()
