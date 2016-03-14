@@ -83,7 +83,7 @@ class AbstractScraper(metaclass=ABCMeta):
                     self.job_attrs['url'] = job_url
                     self.update_scraped_db()
                 except ScraperException as err:
-                    self.logger.error("Scraping error: @ {0} Error: {1}".format(
+                    self.logger.error("Scraping error: {0} Error: {1}".format(
                         job_url, err
                     ))
                     continue
@@ -165,28 +165,37 @@ class AbstractScraper(metaclass=ABCMeta):
 
         CODE SMELL: 2x van az os.remove()
         """
-        current_html = requests.get(urljoin(
-            self.base_url, self.all_job_url)).text
-        soup = BeautifulSoup(current_html, 'html.parser').find(
+        current_html_file, content = self.download_and_save_current_html()
+        cache_outdated = True
+        if os.path.isfile(self.cache):
+            if filecmp.cmp(self.cache, current_html_file):
+                cache_outdated = False
+        else:
+            self.update_cache(str(content))
+        os.remove(current_html_file)
+        return cache_outdated
+
+    def download_and_save_current_html(self):
+        """
+        Letolti a base url-en talalhato html-t, majd elmenti.
+
+        :return: (elmentett file path, html_content)
+        """
+        url = urljoin(self.base_url, self.all_job_url)
+        current_html = requests.get(url).text
+        beatufil_soup = BeautifulSoup(current_html, 'html.parser')
+        soup = beatufil_soup.find(
             self.all_job_container_html_element,
             class_=self.all_job_container_html_class
         )
-        with open(
-                os.path.join(get_dynamic_parent_folder(
-                    self.__class__),
-                    '.current.html'),
-                'w') as f:
-            f.write(str(soup))
-        current_html_file = os.path.join(
-            get_dynamic_parent_folder(self.__class__),'.current.html')
-        if os.path.isfile(self.cache):
-            if filecmp.cmp(self.cache, current_html_file):
-                os.remove(current_html_file)
-                return False
-        self.__update_cache(str(soup))
-        os.remove(current_html_file)
-        return True
+        file_path = os.path.join(
+            get_dynamic_parent_folder(self.__class__),'.current.html'
+        )
+        with open(file_path, 'w') as f:
+            f.write(str(soup)
+        )
+        return file_path, soup
 
-    def __update_cache(self, new_data):
+    def update_cache(self, new_data):
         with open(self.cache, 'w') as cache_file:
             cache_file.write(new_data)
