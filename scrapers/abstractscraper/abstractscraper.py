@@ -11,24 +11,25 @@ from urllib.robotparser import RobotFileParser
 import requests
 from bs4 import BeautifulSoup
 
+from helpers.methods import get_dynamic_parent_folder
 from scrapers.exceptions import ScraperException
 from scrapers.models import URL, State, Provider
 
 logger = logging.getLogger(__name__)
 
+
 class BaseScraper(metaclass=ABCMeta):
     """
-    Minden scrapernek az abstract ososztalya
+    Minden scrapernek az abstract ososztalya.
     """
 
     def __init__(self, config_file_name="scraper.ini"):
-        config_file = os.path.join(self.get_parent_folder(), config_file_name)
+        config_file = os.path.join(
+            get_dynamic_parent_folder(self.__class__),
+            config_file_name)
         config = configparser.ConfigParser()
         config.read(config_file)
         self.__read_configuration(config)
-
-    def get_parent_folder(self):
-        return os.path.dirname(inspect.getfile(self.__class__))
 
     def __read_configuration(self, config):
         """
@@ -54,10 +55,10 @@ class BaseScraper(metaclass=ABCMeta):
         self.single_job_html_tag = config['SingleJobHtmlTag']
         self.single_job_href_tag = config['SingleJobHrefTag']
         self.cache = os.path.join(
-            self.get_parent_folder(),
+            get_dynamic_parent_folder(self.__class__),
             config.get('Cache', '.cache.html'))
         self.json = os.path.join(
-            self.get_parent_folder(),
+            get_dynamic_parent_folder(self.__class__),
             config.get('JSON', '.scraped_jobs.json'))
         self.job_attrs = {}
 
@@ -160,11 +161,13 @@ class BaseScraper(metaclass=ABCMeta):
             class_=self.all_job_container_html_class
         )
         with open(
-                os.path.join(self.get_parent_folder(),'.current.html'),
+                os.path.join(get_dynamic_parent_folder(
+                    self.__class__),
+                    '.current.html'),
                 'w') as f:
             f.write(str(soup))
         current_html_file = os.path.join(
-            self.get_parent_folder(),'.current.html')
+            get_dynamic_parent_folder(self.__class__),'.current.html')
         if os.path.isfile(self.cache):
             if filecmp.cmp(self.cache, current_html_file):
                 os.remove(current_html_file)
