@@ -25,3 +25,7 @@ def replace_with_empty_char(word, forbidden_wordlist):
     for forbid_word in forbidden_wordlist:
         ret = ret.replace(forbid_word, "")
     return ret
+
+
+def are_substrings_in_string(main_word, substrings):
+    return any(substring in main_word for substring in substrings)
