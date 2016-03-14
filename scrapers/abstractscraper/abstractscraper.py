@@ -31,6 +31,10 @@ class BaseScraper(metaclass=ABCMeta):
 
     @property
     def logger(self):
+        """
+        Nem modul szintu loggolas, hanem osztalyszintut tesz lehetove
+        :return: logger objektum
+        """
         name = '.'.join([__name__, self.__class__.__name__])
         return logging.getLogger(name)
 
