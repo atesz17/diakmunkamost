@@ -5,6 +5,14 @@ from jobs.models import TimeStampedModel
 
 
 class URL(TimeStampedModel):
+    """
+    A scrapelt diakmunkahoz tartozo alapadatok.
+
+    url -- Ezen az url-en talalhato meg a munka
+    state -- scrapeles allapota (siker, kudarc)
+    provider -- diakszovetkezet neve
+    scraped_data -- json-ba rakja bele a leszedett adatokat
+    """
 
     url = models.TextField(
         primary_key=True,
@@ -33,6 +41,9 @@ class URL(TimeStampedModel):
 
 
 class State(TimeStampedModel):
+    """
+    Scraping statuszt reprezentalo osztaly.
+    """
 
     state = models.TextField(
         unique=True,
@@ -44,6 +55,9 @@ class State(TimeStampedModel):
 
 
 class Provider(TimeStampedModel):
+    """
+    Diakszovetkezet.
+    """
 
     name = models.TextField(
         verbose_name="Diakszövetkezet rövid neve"

@@ -3,6 +3,7 @@ import configparser
 import filecmp
 import inspect
 import json
+import logging
 import os
 from urllib.parse import urljoin
 from urllib.robotparser import RobotFileParser
@@ -13,14 +14,11 @@ from bs4 import BeautifulSoup
 from scrapers.exceptions import ScraperException
 from scrapers.models import URL, State, Provider
 
+logger = logging.getLogger(__name__)
 
 class BaseScraper(metaclass=ABCMeta):
     """
-    Minden scrapernek ez lesz az ososztalya
-    Lehetosing szerint az automatizalhato dolgokat mint pl.: url-ek scrapelese,
-    json kiirasa, cache osszehasonlitasa, ezeket itt megvlaositom, a
-    specifikusabb reszeket pedig majd az alosztalyban. Lenyeges dolgokat
-    egy config fajlbol fogja kiolvasni
+    Minden scrapernek az abstract ososztalya
     """
 
     def __init__(self, config_file_name="scraper.ini"):
