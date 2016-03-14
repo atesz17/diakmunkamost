@@ -13,3 +13,15 @@ def get_dynamic_parent_folder(class_name):
     :return: eleresi utvonalat ahhoz a konyvtarhoz, ahol az osztaly eppen fut
     """
     return os.path.dirname(inspect.getfile(class_name))
+
+
+def replace_with_empty_char(word, forbidden_wordlist):
+    """
+    Kicsereli a megadott szoban a listaban megadott szavakat ures karakterre.
+
+    :return:
+    """
+    ret = word
+    for forbid_word in forbidden_wordlist:
+        ret = ret.replace(forbid_word, "")
+    return ret
