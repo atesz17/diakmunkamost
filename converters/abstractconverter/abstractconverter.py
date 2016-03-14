@@ -5,7 +5,7 @@ import inspect
 import json
 
 from converters.exceptions import ConverterException
-
+from helpers.methods import get_dynamic_parent_folder
 from jobs.models import Job, JobProvider, JobType
 from jobs.forms import JobForm
 from scrapers.models import URL, State
@@ -27,7 +27,9 @@ class AbstractConverter(metaclass=ABCMeta):
         self.working_hours = None
         self.other = None
         self.url = None
-        config_file = os.path.join(self.get_parent_folder(), config_file_name)
+        config_file = os.path.join(
+            get_dynamic_parent_folder(self.__class__),
+            config_file_name)
         config = configparser.ConfigParser()
         config.read(config_file)
         self.__read_configuration(config)

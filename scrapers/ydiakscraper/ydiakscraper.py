@@ -18,6 +18,7 @@ class YDiakScraper(AbstractScraper):
         ter vissza. Ezt majd a converter fogja lekezelni, hogy mi a teendo,
         ha valamelyik ertek None
         """
+
         soup = BeautifulSoup(job, 'html.parser')
         self.job_attrs['place_of_work'] = soup.find(
             itemprop="addressRegion").get_text()
