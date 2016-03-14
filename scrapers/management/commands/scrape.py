@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 
 from scrapers.apps import ScrapersConfig
-from scrapers.basescraper.scraper import  BaseScraper
+from scrapers.abstractscraper.abstractscraper import  BaseScraper
 
 
 class Command(BaseCommand):

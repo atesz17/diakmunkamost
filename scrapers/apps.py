@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
-from scrapers.ydiakscraper.scraper import YDiakScraper
+from scrapers.ydiakscraper.ydiakscraper import YDiakScraper
 
 
 class ScrapersConfig(AppConfig):

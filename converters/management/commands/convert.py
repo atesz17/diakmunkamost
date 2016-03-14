@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 
 from converters.apps import ConvertersConfig
-from converters.abstractconverter.converter import AbstractConverter
+from converters.abstractconverter.abstractconverter import AbstractConverter
 
 
 class Command(BaseCommand):

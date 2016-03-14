@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
-from converters.ydiakconverter.converter import YDiakConverter
+from converters.ydiakconverter.ydiakconverter import YDiakConverter
 
 class ConvertersConfig(AppConfig):
     name = 'converters'

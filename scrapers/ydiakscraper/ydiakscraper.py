@@ -1,4 +1,4 @@
-from scrapers.basescraper.scraper import BaseScraper
+from scrapers.abstractscraper.abstractscraper import BaseScraper
 from scrapers.exceptions import ScraperException
 
 from bs4 import BeautifulSoup

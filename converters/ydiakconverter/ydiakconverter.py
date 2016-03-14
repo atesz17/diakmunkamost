@@ -1,4 +1,4 @@
-from converters.abstractconverter.converter import AbstractConverter
+from converters.abstractconverter.abstractconverter import AbstractConverter
 from converters.exceptions import ConverterException
 
 from jobs.models import Job
