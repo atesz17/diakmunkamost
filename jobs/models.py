@@ -3,20 +3,7 @@ from django.core.urlresolvers import reverse
 from django.core.validators import URLValidator
 from django.db import models
 
-
-class TimeStampedModel(models.Model):
-    created = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name='Hozzáadás dátuma'
-    )
-    modified = models.DateTimeField(
-        auto_now=True,
-        verbose_name='Módosítás dátuma'
-    )
-
-    class Meta:
-        abstract = True
-
+from helpers.models import TimeStampedModel
 
 class Job(TimeStampedModel):
 

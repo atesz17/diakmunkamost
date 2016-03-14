@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import URLValidator
 
-from jobs.models import TimeStampedModel
+from helpers.models import TimeStampedModel
 
 
 class URL(TimeStampedModel):
