@@ -15,8 +15,6 @@ from helpers.methods import get_dynamic_parent_folder
 from scrapers.exceptions import ScraperException
 from scrapers.models import URL, State, Provider
 
-logger = logging.getLogger(__name__)
-
 
 class BaseScraper(metaclass=ABCMeta):
     """
@@ -30,6 +28,11 @@ class BaseScraper(metaclass=ABCMeta):
         config = configparser.ConfigParser()
         config.read(config_file)
         self.__read_configuration(config)
+
+    @property
+    def logger(self):
+        name = '.'.join([__name__, self.__class__.__name__])
+        return logging.getLogger(name)
 
     def __read_configuration(self, config):
         """
@@ -62,7 +65,7 @@ class BaseScraper(metaclass=ABCMeta):
             config.get('JSON', '.scraped_jobs.json'))
         self.job_attrs = {}
 
-    def scrape(self, force_update=True):
+    def scrape(self):
         """
         Ez aja a keretet maganak a scrapeles folyamatanak. Nem ajanlott
         felulirni
@@ -76,7 +79,7 @@ class BaseScraper(metaclass=ABCMeta):
             szabalynal hasalt el a vizsgalat)
             """
             raise ScraperException("Robots.txt doesn't allow scraping")
-        if force_update or self.is_cache_outdated():
+        if self.is_cache_outdated():
             for job_html, job_url in self.get_jobs():
                 try:
                     self.gather_specific_job_info(job_html)
@@ -86,7 +89,10 @@ class BaseScraper(metaclass=ABCMeta):
                 self.job_attrs['url'] = job_url
                 self.update_scraped_db()
         else:
-            print("Nem valtozott az oldal (cache)")
+            self.logger.info(
+                "Az oldal tartalma nem valtozott a legutobbi scrapeles ota "
+                "(Cache megegyezik az oldallal)"
+            )
 
     def update_scraped_db(self):
         """

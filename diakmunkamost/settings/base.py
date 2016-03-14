@@ -120,10 +120,16 @@ STATIC_URL = '/static/'
 
 LOGGING = {
     'version': 1,
+    'formatters': {
+        'simple': {
+            'format': '%(name)s:%(levelname)s %(message)s'
+        }
+    },
     'handlers': {
         'console':  {
             'class': 'logging.StreamHandler',
-            'level': 'INFO'
+            'level': 'INFO',
+            'formatter': 'simple'
         }
     },
     'loggers': {
