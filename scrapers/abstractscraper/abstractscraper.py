@@ -1,7 +1,6 @@
 from abc import ABCMeta, abstractmethod
 import configparser
 import filecmp
-import inspect
 import json
 import logging
 import os
@@ -16,7 +15,7 @@ from scrapers.exceptions import ScraperException
 from scrapers.models import URL, State, Provider
 
 
-class BaseScraper(metaclass=ABCMeta):
+class AbstractScraper(metaclass=ABCMeta):
     """
     Minden scrapernek az abstract ososztalya.
     """
@@ -27,7 +26,7 @@ class BaseScraper(metaclass=ABCMeta):
             config_file_name)
         config = configparser.ConfigParser()
         config.read(config_file)
-        self.__read_configuration(config)
+        self.read_configuration(config)
 
     @property
     def logger(self):
@@ -38,7 +37,7 @@ class BaseScraper(metaclass=ABCMeta):
         name = '.'.join([__name__, self.__class__.__name__])
         return logging.getLogger(name)
 
-    def __read_configuration(self, config):
+    def read_configuration(self, config):
         """
         Azoknal az ertekeknel, ami mindenkeppen specifikus, ott a [] operatort
         kell hasznalni, ahol elkepzelheto deafult value, ott a get()-et
@@ -71,27 +70,23 @@ class BaseScraper(metaclass=ABCMeta):
 
     def scrape(self):
         """
-        Ez aja a keretet maganak a scrapeles folyamatanak. Nem ajanlott
-        felulirni
-        :param force_update: Nem lenyeges, hogy a cache outdatelt vagy nem,
-        mindenkeppen frissiteni fogja a jobokat
-        :return:
+        Az adott oldarol leszedi a munkakat.
         """
         if not self.is_scraping_allowed():
-            """
-            azert ezt illene egy kicsit kiboviteni (melyik URL-en, melyik
-            szabalynal hasalt el a vizsgalat)
-            """
+            self.logger.error("Nem lehet scrapelni az oldalt")
             raise ScraperException("Robots.txt doesn't allow scraping")
         if self.is_cache_outdated():
             for job_html, job_url in self.get_jobs():
                 try:
+                    self.logger.info("Scraping: {0}".format(job_url))
                     self.gather_specific_job_info(job_html)
+                    self.job_attrs['url'] = job_url
+                    self.update_scraped_db()
                 except ScraperException as err:
-                    print(err)
-                    continue # nem pesti munka volt
-                self.job_attrs['url'] = job_url
-                self.update_scraped_db()
+                    self.logger.error("Scraping error: @ {0} Error: {1}".format(
+                        job_url, err
+                    ))
+                    continue
         else:
             self.logger.info(
                 "Az oldal tartalma nem valtozott a legutobbi scrapeles ota "
@@ -100,9 +95,7 @@ class BaseScraper(metaclass=ABCMeta):
 
     def update_scraped_db(self):
         """
-        Felvesszuk a job-ot a db-be, es beallituk a statuszat scraped-re
-        :param job:
-        :return:
+        Felveszi a scrapelt db-be a munkat scraped statusszal
         """
         url_obj = URL()
         url_obj.url = self.job_attrs['url']
@@ -117,16 +110,23 @@ class BaseScraper(metaclass=ABCMeta):
         """
         All job pagen vegigiteralunk az osszes munkan, amiket tovabb adunk a
         gather_specific_job_info() fgv-nek
-        :return:
+        :return: (html content, job url)
         """
         root_html = requests.get(urljoin(self.base_url, self.all_job_url)).text
         soup = BeautifulSoup(root_html, 'html.parser')
         for job in soup.find_all("a", class_=self.single_job_href_tag):
-            if self.is_job_already_scraped(job['href']):
+            if AbstractScraper.is_job_already_scraped(job['href']):
                 continue
             yield requests.get(job['href']).text, job['href']
 
-    def is_job_already_scraped(self, job_url):
+    @staticmethod
+    def is_job_already_scraped(job_url):
+        """
+        Megmondja, hogy az adott job url object benne van mar a scrapelt db-ben
+
+        :param job_url: Ezt a job url objectet vizsgalja meg a fuggveny
+        :return:
+        """
         try:
             job = URL.objects.get(pk=job_url)
             return True
@@ -137,6 +137,7 @@ class BaseScraper(metaclass=ABCMeta):
         """
         Megnezi, hogy a robots.txt nem tiltja-e a scrapelest. Nem igazan teljes
         az ellenorzes, mert csak az all job url-t vizsgalja.
+
         :return:
         """
         robot_parser = RobotFileParser()

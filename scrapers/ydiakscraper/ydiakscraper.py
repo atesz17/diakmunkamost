@@ -1,10 +1,10 @@
-from scrapers.abstractscraper.abstractscraper import BaseScraper
+from scrapers.abstractscraper.abstractscraper import AbstractScraper
 from scrapers.exceptions import ScraperException
 
 from bs4 import BeautifulSoup
 
 
-class YDiakScraper(BaseScraper):
+class YDiakScraper(AbstractScraper):
 
     def gather_specific_job_info(self, job):
         """

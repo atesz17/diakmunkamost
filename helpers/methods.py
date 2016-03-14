@@ -13,3 +13,5 @@ def get_dynamic_parent_folder(class_name):
     :return: eleresi utvonalat ahhoz a konyvtarhoz, ahol az osztaly eppen fut
     """
     return os.path.dirname(inspect.getfile(class_name))
+
+def get_html_content()

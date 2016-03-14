@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 
 from scrapers.apps import ScrapersConfig
-from scrapers.abstractscraper.abstractscraper import  BaseScraper
+from scrapers.abstractscraper.abstractscraper import  AbstractScraper
 
 
 class Command(BaseCommand):
@@ -19,7 +19,7 @@ class Command(BaseCommand):
         """
         for scraper_class in ScrapersConfig.scraper_classes:
             scraper = scraper_class()
-            if isinstance(scraper, BaseScraper):
+            if isinstance(scraper, AbstractScraper):
                 scraper.scrape()
 
 
