@@ -8,7 +8,7 @@ DEBUG = False
 
 TEMPLATE_DEBUG = DEBUG
 
-ALLOWED_HOSTS = [get_env_variable('DIAKMUNKAMOST_ALLOWED_HOSTS')]
+ALLOWED_HOSTS = ['papaiattila.me', 'www.papaiattila.me']
 
 DATABASES = {
     'default': {
