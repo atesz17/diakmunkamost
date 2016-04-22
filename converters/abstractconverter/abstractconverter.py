@@ -4,6 +4,7 @@ import os
 import json
 import logging
 
+from django.db.models import Q
 from converters.exceptions import ConverterException
 from helpers.methods import get_dynamic_parent_folder
 from jobs.models import Job, JobProvider, JobType
@@ -58,7 +59,7 @@ class AbstractConverter(metaclass=ABCMeta):
         scraped_jobs = URL.objects.filter(
             provider__name=self.provider_name
         ).filter(
-            state__state="scraped"
+            Q(state__state="scraped") | Q(state__state="converter_error")
         )
         for scraped_job in scraped_jobs:
             try:
@@ -79,7 +80,8 @@ class AbstractConverter(metaclass=ABCMeta):
                 scraped_job.state = State.objects.get_or_create(
                     state="converted"
                 )[0]
-            except ConverterException as err:
+            #  better error handling
+            except (ConverterException, KeyError, ValueError) as err:
                 scraped_job.state = State.objects.get_or_create(
                     state="converter_error"
                 )[0]
