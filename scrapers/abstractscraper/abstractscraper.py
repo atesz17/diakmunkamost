@@ -144,10 +144,8 @@ class AbstractScraper(metaclass=ABCMeta):
         robots_url = urljoin(self.base_url, 'robots.txt')
         robot_parser.set_url(robots_url)
         robot_parser.read()
-        if robot_parser.can_fetch('*', urljoin(
-                self.base_url, self.all_job_url)):
-            return True
-        return False
+        return robot_parser.can_fetch('*', urljoin(
+                self.base_url, self.all_job_url))
 
     @abstractmethod
     def gather_specific_job_info(self, job):

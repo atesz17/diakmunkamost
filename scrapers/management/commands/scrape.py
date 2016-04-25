@@ -18,9 +18,10 @@ class Command(BaseCommand):
         meg kell adni a scraper package-k nevet
         """
         for scraper_class in ScrapersConfig.scraper_classes:
-            scraper = scraper_class()
-            if isinstance(scraper, AbstractScraper):
-                scraper.scrape()
+            scraper_class().scrape()
+            #scraper = scraper_class()
+            #if isinstance(scraper, AbstractScraper):
+            #    scraper.scrape()
 
 
 
