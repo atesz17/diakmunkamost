@@ -5,7 +5,7 @@ from .models import Job, JobType, JobProvider
 
 class JobAdmin(admin.ModelAdmin):
     list_display = ('title', 'job_type', 'min_salary')
-    list_filter = ('job_type',)
+    list_filter = ('job_type', 'job_provider')
     ordering = ('title',)
     search_fields = ('title',)
 
