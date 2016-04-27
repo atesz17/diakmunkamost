@@ -1,4 +1,3 @@
-from scrapers.abstractscraper.abstractscraper import  AbstractScraper
 from scrapers.exceptions import ScraperException
 from helpers.methods import get_dynamic_parent_folder
 from scrapers.helpers.methods import can_fetch_url, is_job_already_scraped

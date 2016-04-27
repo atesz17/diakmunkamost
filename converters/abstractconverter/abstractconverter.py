@@ -129,7 +129,7 @@ class AbstractConverter(metaclass=ABCMeta):
         return json.loads(scraped_job.scraped_data)['working_hours']
 
     def convert_other(self, scraped_job):
-        return json.loads(scraped_job.scraped_data)['other']
+        return json.loads(scraped_job.scraped_data).get('other')
 
     def save_job(self):
         form = JobForm({
