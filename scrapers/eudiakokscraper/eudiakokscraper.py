@@ -49,6 +49,11 @@ class EuDiakokScraper:
 
     @staticmethod
     def save(job):
+        """
+        Saves the given job to the URL table.
+
+        :param job: dictionary containing job attributes
+        """
         url_obj = URL()
         url_obj.url = job['url']
         del job['url']
@@ -59,7 +64,14 @@ class EuDiakokScraper:
         url_obj.scraped_data = json.dumps(job, ensure_ascii=False)
         url_obj.save()
 
-    def scrape_page(self, html):
+    @staticmethod
+    def scrape_page(html):
+        """
+        Given html, it returns a dictionary containing the jobb attributes.
+
+        :param html: html content
+        :return: job attributes dictionary
+        """
         soup = BeautifulSoup(html, "html.parser")
         attrs = dict()
         attrs["title"] = soup.find("h2", class_="cimsav").text
@@ -83,9 +95,13 @@ class EuDiakokScraper:
                 attrs["other"] = heading.find_next("p").text
         return attrs
 
-
     @staticmethod
     def get_jobs():
+        """
+        Gets all the job page's content and their urls.
+
+        :return: (job page html, job url)
+        """
         eu = EuDiakokScraper
         for url in eu.get_job_links():
             if not is_job_already_scraped(url):
@@ -93,6 +109,11 @@ class EuDiakokScraper:
 
     @staticmethod
     def get_job_links():
+        """
+        Gets all the links pointing to the actual job entries.
+
+        :return: link list which are found on website
+        """
         eu = EuDiakokScraper
         html = requests.get(eu.base_url).text
         soup = BeautifulSoup(html, "html.parser").find(

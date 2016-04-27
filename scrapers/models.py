@@ -36,6 +36,7 @@ class URL(TimeStampedModel):
     )
 
     def __str__(self):
+        # if there is trailing "/" in url
         if self.url[-1] == "/":
             s = str(self.url).split("/")
             return s[-2]
