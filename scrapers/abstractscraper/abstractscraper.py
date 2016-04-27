@@ -13,6 +13,7 @@ from bs4 import BeautifulSoup
 from helpers.methods import get_dynamic_parent_folder
 from scrapers.exceptions import ScraperException
 from scrapers.models import URL, State, Provider
+from scrapers.helpers.methods import is_job_already_scraped
 
 
 class AbstractScraper(metaclass=ABCMeta):
@@ -115,23 +116,9 @@ class AbstractScraper(metaclass=ABCMeta):
         root_html = requests.get(urljoin(self.base_url, self.all_job_url)).text
         soup = BeautifulSoup(root_html, 'html.parser')
         for job in soup.find_all("a", class_=self.single_job_href_tag):
-            if AbstractScraper.is_job_already_scraped(job['href']):
+            if is_job_already_scraped(job['href']):
                 continue
             yield requests.get(job['href']).text, job['href']
-
-    @staticmethod
-    def is_job_already_scraped(job_url):
-        """
-        Megmondja, hogy az adott job url object benne van mar a scrapelt db-ben
-
-        :param job_url: Ezt a job url objectet vizsgalja meg a fuggveny
-        :return:
-        """
-        try:
-            job = URL.objects.get(pk=job_url)
-            return True
-        except URL.DoesNotExist:
-            return False
 
     def is_scraping_allowed(self):
         """

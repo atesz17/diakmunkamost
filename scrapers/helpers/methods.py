@@ -1,5 +1,6 @@
 from urllib.robotparser import RobotFileParser
 
+from scrapers.models import URL
 
 def can_fetch_url(robots_url, site_url, useragent="*"):
     """
@@ -15,3 +16,17 @@ def can_fetch_url(robots_url, site_url, useragent="*"):
     rfp.set_url(robots_url)
     rfp.read()
     return rfp.can_fetch(useragent=useragent, url=site_url)
+
+
+def is_job_already_scraped(url):
+    """
+    Checks whether the given url is already in the database
+
+    :param url: url of the object
+    :return: True, if the given url is already in the database
+    """
+    try:
+        job = URL.objects.get(pk=url)
+        return True
+    except URL.DoesNotExist:
+        return False

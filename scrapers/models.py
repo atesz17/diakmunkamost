@@ -36,8 +36,11 @@ class URL(TimeStampedModel):
     )
 
     def __str__(self):
-        s = str(self.url).split("/")
-        return s[2] + ": " + s[-2]
+        if self.url[-1] == "/":
+            s = str(self.url).split("/")
+            return s[-2]
+        else:
+            return str(self.url).split("/")[-1]
 
 
 class State(TimeStampedModel):
