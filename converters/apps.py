@@ -6,6 +6,6 @@ from converters.eudiakokconverter.eudiakokconverter import EuDiakokConverter
 class ConvertersConfig(AppConfig):
     name = 'converters'
     converter_classes = [
-        YDiakConverter,
-        EuDiakokConverter
+        ("ydiak", YDiakConverter),
+        ("eudiakok", EuDiakokConverter)
     ]

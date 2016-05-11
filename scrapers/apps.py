@@ -10,6 +10,6 @@ class ScrapersConfig(AppConfig):
     """
     name = 'scrapers'
     scraper_classes = [
-        YDiakScraper,
-        EuDiakokScraper
+        ("ydiak", YDiakScraper),
+        ("eudiakok", EuDiakokScraper)
     ]

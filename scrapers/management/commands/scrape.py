@@ -6,18 +6,23 @@ from scrapers.apps import ScrapersConfig
 class Command(BaseCommand):
     help = 'Starts scraping the specified job page'
 
+    def add_arguments(self, parser):
+        parser.add_argument("scrapers", nargs="*")
+
     def handle(self, *args, **options):
         """
-        A szep megoldas az lenne, ahogy django source-ban is van ld:
-        execute_from_command_line hogy mukodik
-        ugy lenne szep, hogy mindegyik scraper package-tol megkoveteljuk
-        hogy a scraper neveben szerepeljen a 'scraper' szo (mint a testnel)
-        es automatikusan megtalalja azokat a packageket/modulokat,
-        beimportalja es vegrehajtja oket. Most egyelore az apps.py-ban
-        meg kell adni a scraper package-k nevet
+
+        CODE SMELL: 2x scraper_klass
+
+        :param args:
+        :param options: arguments given from command
         """
-        for scraper_class in ScrapersConfig.scraper_classes:
-            scraper_class().scrape()
+        for scraper_name, scraper_klass in ScrapersConfig.scraper_classes:
+            if len(options["scrapers"]) == 0: # no specific scrapers were given
+                scraper_klass().scrape()
+            else:
+                if scraper_name in options["scrapers"]:
+                    scraper_klass().scrape()
 
 
 
