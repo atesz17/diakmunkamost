@@ -73,12 +73,10 @@ class SchonherzScraper:
         sh = SchonherzScraper
         html = requests.get(category_url).text
         soup = BeautifulSoup(html, "html.parser").find("div", class_="list")
-        # 2 different div classes
-        jobs = []
-        jobs.append(soup.find_all("div", "projectad-list-item"))
-        jobs.append(soup.find_all("div", "projectad-list-item alternate"))
-        for job in jobs:
-            job_soup = BeautifulSoup(job, "html.parser").find()
+        for job in soup.find_all("div", class_="projectad-list-item"):
+            post_url = job.find("a")["href"]
+            full_url = urllib.parse.urljoin(sh.base_url, post_url)
+            yield requests.get(full_url).text, full_url
 
 
     @staticmethod
@@ -92,8 +90,9 @@ class SchonherzScraper:
         html = requests.get(sh.budapest_jobs).text
         soup = BeautifulSoup(html, "html.parser").find(
             "div", class_="categories")
-        for rel_link in soup.find_all("a")["href"]:
-            yield urllib.parse.urljoin(sh.base_url, rel_link)
+        for rel_link in soup.find_all("a"):
+            full_url = urllib.parse.urljoin(sh.base_url, rel_link["href"])
+            yield full_url
 
     def cache_outdated(self):
         """
