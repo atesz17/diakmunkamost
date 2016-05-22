@@ -38,7 +38,7 @@ class SchonherzScraper:
         """
         sh = self.__class__
         self.logger.info("Starting schonherz scraping...")
-        if force or not self.cache_outdated():
+        if not force or not self.cache_outdated():
             self.logger.info("Cache is up-to-date, not scraping")
             return
         for category_url in sh.get_categories():
