@@ -12,6 +12,19 @@ import requests
 from bs4 import BeautifulSoup
 
 
+def nvltext(element):
+    """
+    Accepts any beautifulsoup element, if it's None, then the function
+    returns empty string
+
+    :param element:
+    :return:
+    """
+    if element is None:
+        return ""
+    return element.text
+
+
 class SchonherzScraper:
 
     budapest_jobs = "https://schonherz.hu/hirdetesek/Budapest"
@@ -55,6 +68,31 @@ class SchonherzScraper:
         else:
             self.logger.info("Cache is up-to-date, not scraping")
             return
+
+    @staticmethod
+    def scrape_page(html):
+        """
+        worst page structure ever #killme
+
+        :param html:
+        :return:
+        """
+        attrs = dict()
+        attrs["title"] = BeautifulSoup(html, "html.parser").find(
+            "div",
+            id="projectad-details").find(
+                "div",
+                class_="title").text
+        soup = BeautifulSoup(html, "html.parser").find("div", class_="content")
+        counter = 0
+        for section in soup.find_all("div"):
+            if counter == 0:
+                # feladat leirasa
+                attrs["task"] = soup.find_all("div")[0].text
+                counter = counter + 1
+            if "Elvárások" in nvltext(section.find("p")):
+                attrs["requirements"] = section.find("p").find_next(string=True)
+
 
     @staticmethod
     def save(job):
