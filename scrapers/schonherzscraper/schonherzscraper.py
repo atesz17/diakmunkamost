@@ -87,7 +87,7 @@ class SchonherzScraper:
                 class_="title").text
 
         soup = BeautifulSoup(html, "html.parser")
-        attrs["task"] = "" #  erre valahogy szurni kene
+        attrs["task"] = "Honlapon bővebb információ" #  erre valahogy szurni kene
         attrs["salary"] = str(
             soup.find("p", text=re.compile(r"Fizetés")).next_sibling)
         attrs["working_hours"] = str(
