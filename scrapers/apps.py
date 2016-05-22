@@ -13,5 +13,5 @@ class ScrapersConfig(AppConfig):
     scraper_classes = [
         ("ydiak", YDiakScraper),
         ("eudiakok", EuDiakokScraper),
-        #("schonherz", SchonherzScraper)
+        ("schonherz", SchonherzScraper)
     ]

@@ -7,6 +7,7 @@ import json
 import logging
 import filecmp
 import urllib.parse
+import re
 
 import requests
 from bs4 import BeautifulSoup
@@ -61,8 +62,9 @@ class SchonherzScraper:
                             job = sh.scrape_page(html)
                             job["url"] = url
                             job["job_type"] = category_name
+                            job["place_of_work"] = "Budapest"
                             sh.save(job)
-                        except ScraperException:
+                        except (ScraperException, AttributeError):
                             self.logger.error("SCRAPER ERROR: {}".format(url))
                             continue
         else:
@@ -83,15 +85,17 @@ class SchonherzScraper:
             id="projectad-details").find(
                 "div",
                 class_="title").text
-        soup = BeautifulSoup(html, "html.parser").find("div", class_="content")
-        counter = 0
-        for section in soup.find_all("div"):
-            if counter == 0:
-                # feladat leirasa
-                attrs["task"] = soup.find_all("div")[0].text
-                counter = counter + 1
-            if "Elvárások" in nvltext(section.find("p")):
-                attrs["requirements"] = section.find("p").find_next(string=True)
+
+        soup = BeautifulSoup(html, "html.parser")
+        attrs["task"] = "" #  erre valahogy szurni kene
+        attrs["salary"] = str(
+            soup.find("p", text=re.compile(r"Fizetés")).next_sibling)
+        attrs["working_hours"] = str(
+            soup.find("p", text=re.compile(r"Minimum heti óraszám")).next_sibling)
+        attrs["requirements"] = str(
+            soup.find("p", text=re.compile(r"Elvárások")).next_sibling)
+        return attrs
+
 
 
     @staticmethod
