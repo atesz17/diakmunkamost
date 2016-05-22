@@ -27,13 +27,13 @@ class EuDiakokScraper:
         name = '.'.join(["scrapers", self.__class__.__name__])
         return logging.getLogger(name)
 
-    def scrape(self):
+    def scrape(self, force):
         eu = self.__class__
         self.logger.info("Starting euDiakok scraping...")
         if not can_fetch_url(eu.robots, eu.base_url):
             self.logger.error("Cannot fetch url beacuse of robots.txt.")
             return
-        if not self.cache_outdated():
+        if not force or not self.cache_outdated():
             self.logger.info("Cache is up-to-date, not scraping.")
             return
         for html, url in eu.get_jobs():

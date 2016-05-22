@@ -69,14 +69,14 @@ class AbstractScraper(metaclass=ABCMeta):
             config.get('JSON', '.scraped_jobs.json'))
         self.job_attrs = {}
 
-    def scrape(self):
+    def scrape(self, force):
         """
         Az adott oldarol leszedi a munkakat.
         """
         if not self.is_scraping_allowed():
             self.logger.error("Nem lehet scrapelni az oldalt")
             raise ScraperException("Robots.txt doesn't allow scraping")
-        if self.is_cache_outdated():
+        if not force or self.is_cache_outdated():
             for job_html, job_url in self.get_jobs():
                 try:
                     self.logger.info("Scraping: {0}".format(job_url))
