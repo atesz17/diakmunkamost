@@ -38,22 +38,23 @@ class SchonherzScraper:
         """
         sh = self.__class__
         self.logger.info("Starting schonherz scraping...")
-        if not force or not self.cache_outdated():
+        if force or not self.cache_outdated():
+            for category_url in sh.get_categories():
+                if category_url.split("/")[-1] in sh.target_categories:
+                    category_name = category_url.split("/")[-1]
+                    for html, url in sh.get_jobs(category_url):
+                        self.logger.info("Scraping {}".format(url))
+                        try:
+                            job = sh.scrape_page(html)
+                            job["url"] = url
+                            job["job_type"] = category_name
+                            sh.save(job)
+                        except ScraperException:
+                            self.logger.error("SCRAPER ERROR: {}".format(url))
+                            continue
+        else:
             self.logger.info("Cache is up-to-date, not scraping")
             return
-        for category_url in sh.get_categories():
-            if category_url.split("/")[-1] in sh.target_categories:
-                category_name = category_url.split("/")[-1]
-                for html, url in sh.get_jobs(category_url):
-                    self.logger.info("Scraping {}".format(url))
-                    try:
-                        job = sh.scrape_page(html)
-                        job["url"] = url
-                        job["job_type"] = category_name
-                        sh.save(job)
-                    except ScraperException:
-                        self.logger.error("SCRAPER ERROR: {}".format(url))
-                        continue
 
     @staticmethod
     def save(job):
