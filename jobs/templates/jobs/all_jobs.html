@@ -8,11 +8,29 @@
   <input type="submit" value="Mehet">
 </form>
   {% if jobs %}
+    <table>
     {% for job in jobs %}
-      <p>
+    <tr class="{% cycle 'even' 'odd' %}">
+      <td>
         <a href="{% url 'jobs:specific_job' job.id %}">{{ job.title|upper }}</a>
-      </p>
+      </td>
+      <td>
+        <span>{{ job.job_type }}</span>
+      </td>
+      <td>
+        {% if job.max_salary == 0 and job.min_salary == 0 %}
+          <span>Megállapodás szerint</span>
+        {% elif job.max_salary == job.min_salary %}
+          <span>{{ job.min_salary }} Ft/óra</span>
+        {% else %}
+          <span>{{ job.min_salary}} - {{ job.max_salary}} Ft/óra</span>
+        {% endif %}
+      </td>
+      <td>
+      </td>
+    </tr>
     {% endfor %}
+    </table>
   {% else %}
     <p>Nincs a megadott paramétereknek megfelelő munka.</p>
   {% endif %}

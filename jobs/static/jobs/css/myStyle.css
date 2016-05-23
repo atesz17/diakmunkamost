@@ -35,3 +35,28 @@ footer {
     text-align: center;
     margin: 20px 0;
 }
+
+.even   {
+    background-color: #004c70;
+}
+
+.odd    {
+    background-color: #0093d1;
+}
+
+table   {
+    color: white;
+    width: 100%;
+}
+
+table a {
+    color: white;
+}
+
+table a:hover   {
+    color: white;
+}
+
+td  {
+    height: 50px;
+}
