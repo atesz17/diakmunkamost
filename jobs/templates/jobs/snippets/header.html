@@ -1,9 +1,8 @@
-<header>
+<div class="header clearfix">
   <nav>
-    <a id="brand-logo" href="{% url 'home' %}">Diákmunka most!</a>
-    <ul>
-      <li><a href="{% url 'jobs:all_jobs' 1 %}">Összes munka</a></li>
-      <li><a href="{% url 'about' %}">Az oldalról</a></li>
+    <ul class="nav nav-pills pull-right">
+      <li role="presentation"><a href="{% url 'jobs:all_jobs' 1 %}">Összes munka</a></li>
     </ul>
   </nav>
-</header>
+  <h3><a href="{% url 'home' %}">Diákmunka Most!</a></h3>
+</div>

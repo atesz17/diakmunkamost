@@ -4,16 +4,15 @@
   {% include "jobs/snippets/meta_tags.html" %}
   <title>{% block page_title %}Diákmunka most!{% endblock %}</title>
   {% load staticfiles %}
-  <link rel="stylesheet" type="text/css" href="{% static 'jobs/css/vendor/normalize.css' %}" />
-  <link rel="stylesheet" type="text/css" href="{% static 'jobs/css/vendor/skeleton.css' %}" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="{% static 'jobs/css/myStyle.css' %}" />
 </head>
 <body>
-  {% include "jobs/snippets/header.html" %}
-  <main>
+  <div class="container">
+    {% include "jobs/snippets/header.html" %}
     {% block content %}
     {% endblock %}
-  </main>
+  </div>
   {% include "jobs/snippets/footer.html" %}
   {% include "jobs/snippets/bottom_script_include.html" %}
 </body>
