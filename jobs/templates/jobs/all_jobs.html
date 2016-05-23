@@ -4,7 +4,10 @@
 
 {% block content %}
 <form method="GET" action="{% url 'jobs:all_jobs' 1 %}">
-  {{ search_form }}
+  <div id="job-type">
+    <span>Munka tipusa</span>
+    <p>{{ search_form.job_types }}</p>
+  </div>
   <input type="submit" value="Mehet">
 </form>
   {% if jobs %}
