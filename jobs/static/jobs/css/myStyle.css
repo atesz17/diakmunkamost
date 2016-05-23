@@ -72,3 +72,12 @@ td  {
 li {
     list-style: none;
 }
+
+.pagination {
+    display: block;
+    text-align: center;
+}
+
+.pagination a {
+    padding: 0 5px;
+}
