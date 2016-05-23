@@ -10,11 +10,16 @@ import json
 class SchonherzConverter(AbstractConverter):
 
     to_be_replaced_words = {
-        "salary": ["Br.", "Ft/óra", " ", r"\r", r"\n"]
+        "salary": ["Br.", "Ft/óra", "Ft/ óra", " ", r"\r", r"\n"]
     }
     job_types_synonyms = {
         "informatikai": ["fejleszto", "informatikus", "szoftvertesztelo",
-                         "sitebuilder", "mobil-fejlesztes", "otthonrol-vegezheto"]
+                         "sitebuilder", "mobil-fejlesztes", "otthonrol-vegezheto",
+                         "support"],
+        "irodai" : ["adminisztrativ"],
+        "fizikai" : ["fizikai"],
+        "hostess" : ["hostess", "betanitott"],
+        "muszaki" : ["gepeszmernok", "egyeb-muszaki"]
     }
 
     def convert_job_type(self, scraped_job):

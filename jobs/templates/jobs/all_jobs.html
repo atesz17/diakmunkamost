@@ -3,10 +3,24 @@
 {% block page_title %}Összes Munka | Diákmunka most!{% endblock %}
 
 {% block content %}
-<form method="GET" action="{% url 'jobs:all_jobs' 1 %}">
-  <div id="job-type">
-    <h4>Munka típusa</h4>
-    {{ search_form.job_types }}
+<form class="form-horizontal" method="GET" action="{% url 'jobs:all_jobs' 1 %}">
+  <div class="form-group">
+    <div class="col-md-6">
+      <div id="job-type">
+        <h4>Munka típusa</h4>
+        {{ search_form.job_types }}
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div id="min-salary">
+        <h4>Minimum bér</h4>
+        {{ search_form.min_salary }}
+      </div>
+      <div id="order by">
+        <h4>Rendezés</h4>
+        {{ search_form.order_by }}
+      </div>
+    </div>
   </div>
   <input type="submit" value="Mehet">
 </form>
