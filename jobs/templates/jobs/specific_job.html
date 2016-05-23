@@ -3,6 +3,7 @@
 {% block page_title %}{{ job.title }} | Diákmunka most!{% endblock %}
 
 {% block content %}
+<div class="custom-container">
   <h1 id="job-title">{{ job.title }}</h1>
   <h3 id="job-type">Munka típusa: {{ job.job_type }}</h3>
   <h3>Feladat leírása:</h3>
@@ -15,7 +16,8 @@
   {% else %}
     <h3 id="job-salary">Bérezés: {{ job.min_salary}} - {{ job.max_salary}} Ft/óra</h3>
   {% endif %}
-  <h3 id="job-working-hours">Munkaidő: {{ job.working_hours }}</h3>
+  <h3 id="job-working-hours">Munkaidő:</h3>
+  <p>{{ job.working_hours }}</p>
   <h3>Feltételek:</h3>
   <p id="job-requirements">{{ job.requirements }}</p>
   {% if job.other_info %}
@@ -25,4 +27,5 @@
   <h3>Diákszövetkezet</h3>
   <p id="job_provider">{{ job.job_provider }}</p>
   <a type="button" id="job-url" class="btn btn-primary btn-lg" href="{{ job.url }}">Jelentkezem!</a>
+</div>
 {% endblock %}
