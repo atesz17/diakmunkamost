@@ -5,8 +5,8 @@
 {% block content %}
 <form method="GET" action="{% url 'jobs:all_jobs' 1 %}">
   <div id="job-type">
-    <span>Munka tipusa</span>
-    <p>{{ search_form.job_types }}</p>
+    <h4>Munka típusa</h4>
+    {{ search_form.job_types }}
   </div>
   <input type="submit" value="Mehet">
 </form>

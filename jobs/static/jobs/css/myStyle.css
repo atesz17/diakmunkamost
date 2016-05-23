@@ -64,3 +64,11 @@ td  {
     height: 50px;
     padding: 10px;
 }
+
+#id_job_types   {
+    padding-left: 2px;
+}
+
+li {
+    list-style: none;
+}
