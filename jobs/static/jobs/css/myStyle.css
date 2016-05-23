@@ -65,7 +65,7 @@ td  {
     padding: 10px;
 }
 
-#id_job_types   {
+#id_job_types, #id_order_by   {
     padding-left: 2px;
 }
 

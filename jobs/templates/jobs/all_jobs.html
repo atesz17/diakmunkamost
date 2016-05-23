@@ -5,13 +5,13 @@
 {% block content %}
 <form class="form-horizontal" method="GET" action="{% url 'jobs:all_jobs' 1 %}">
   <div class="form-group">
-    <div class="col-md-6">
+    <div class="col-md-3 col-md-offset-3">
       <div id="job-type">
         <h4>Munka típusa</h4>
         {{ search_form.job_types }}
       </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-3">
       <div id="min-salary">
         <h4>Minimum bér</h4>
         {{ search_form.min_salary }}
@@ -20,9 +20,9 @@
         <h4>Rendezés</h4>
         {{ search_form.order_by }}
       </div>
+      <input type="submit" value="Mehet" class="btn btn-lg btn-success">
     </div>
   </div>
-  <input type="submit" value="Mehet">
 </form>
   {% if jobs %}
     <table>
