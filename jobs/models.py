@@ -100,13 +100,19 @@ class JobType(models.Model):
 
 class JobProvider(models.Model):
 
+    PROVIDER_FULL_NAME = {
+        "ydiak": "Y Generáció Iskolaszövetkezet",
+        "eudiakok": "euDIÁKOK",
+        "schonherz": "Schönherz Iskolaszövetkezet"
+    }
+
     name = models.TextField(
         unique=True,
         verbose_name="Szövetkezet neve"
     )
 
     def __str__(self):
-            return self.name
+            return self.PROVIDER_FULL_NAME.get(self.name, "Ismeretlen")
 
     class Meta:
         verbose_name = "Diákmunka Szövetkezet"
