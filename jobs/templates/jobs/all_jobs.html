@@ -12,7 +12,7 @@
     {% for job in jobs %}
     <tr class="{% cycle 'even' 'odd' %}">
       <td>
-        <a href="{% url 'jobs:specific_job' job.id %}">{{ job.title|upper }}</a>
+        <a href="{% url 'jobs:specific_job' job.id %}">{{ job.title }}</a>
       </td>
       <td>
         <span>{{ job.job_type }}</span>
