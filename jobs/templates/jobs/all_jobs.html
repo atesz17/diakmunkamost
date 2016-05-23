@@ -52,7 +52,9 @@
     {% endfor %}
     </table>
   {% else %}
-    <p>Nincs a megadott paramétereknek megfelelő munka.</p>
+    <div class="alert alert-danger">
+    Nincs a megadott paramétereknek megfelelő munka.
+    </div>
   {% endif %}
 <div class="pagination">
   <span class="step-links">

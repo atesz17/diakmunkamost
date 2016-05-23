@@ -90,3 +90,7 @@ li {
 #table-title    {
     background-color: #F2635F;
 }
+
+.alert-danger   {
+    text-align: center;
+}
