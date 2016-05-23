@@ -86,3 +86,7 @@ li {
 .pagination a {
     padding: 0 5px;
 }
+
+#table-title    {
+    background-color: #F2635F;
+}

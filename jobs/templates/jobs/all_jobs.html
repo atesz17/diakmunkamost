@@ -26,6 +26,11 @@
 </form>
   {% if jobs %}
     <table>
+      <tr id="table-title">
+        <td>Pozíció</td>
+        <td>Munka típusa</td>
+        <td>Bérezés</td>
+      </tr>
     {% for job in jobs %}
     <tr class="{% cycle 'even' 'odd' %}">
       <td>
@@ -42,8 +47,6 @@
         {% else %}
           <span>{{ job.min_salary}} - {{ job.max_salary}} Ft/óra</span>
         {% endif %}
-      </td>
-      <td>
       </td>
     </tr>
     {% endfor %}
