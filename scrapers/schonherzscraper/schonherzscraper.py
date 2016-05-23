@@ -62,7 +62,6 @@ class SchonherzScraper:
                             job = sh.scrape_page(html)
                             job["url"] = url
                             job["job_type"] = category_name
-                            job["place_of_work"] = "Budapest"
                             sh.save(job)
                         except (ScraperException, AttributeError):
                             self.logger.error("SCRAPER ERROR: {}".format(url))
@@ -88,6 +87,8 @@ class SchonherzScraper:
 
         soup = BeautifulSoup(html, "html.parser")
         attrs["task"] = "Honlapon bővebb információ" #  erre valahogy szurni kene
+        attrs["place_of_work"] = str(
+            soup.find("p", text=re.compile(r"Munkavégzés helye")).next_sibling)
         attrs["salary"] = str(
             soup.find("p", text=re.compile(r"Fizetés")).next_sibling)
         attrs["working_hours"] = str(
